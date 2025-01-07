@@ -18,4 +18,5 @@ public class Event
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public EventGroup? EventGroup { get; set; }
+    public User? User { get; set; }
 }
