@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TimeScout.API.DataAccess;
+using TimeScout.API.Repository;
+using TimeScout.API.Services;
 
 namespace TimeScout.API;
 
@@ -21,8 +23,10 @@ public class StartUp
         services.AddControllers();
 
         // Add repository scoped
+        services.AddScoped<IUserRepository, UserRepository>();
 
         // Add service scoped
+        services.AddScoped<IIdentityService, IdentityService>();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
