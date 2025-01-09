@@ -42,7 +42,7 @@ public class StartUp
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = Configuration["Jwt:Issuer"],
                 ValidAudience = Configuration["Jwt:Issuer"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"] ?? throw new ArgumentNullException("No JWT key found in configuration.")))
             };
         });
 
@@ -66,7 +66,7 @@ public class StartUp
         app.UseRouting();
 
         app.UseAuthentication();
-        // app.UseAuthorization();
+        app.UseAuthorization();
 
         app.UseEndpoints(endpoints => {
             endpoints.MapControllers();
