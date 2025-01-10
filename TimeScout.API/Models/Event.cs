@@ -1,8 +1,9 @@
 using System;
+using TimeScout.API.Entity;
 
 namespace TimeScout.API.Models;
 
-public class Event
+public class Event : BaseEntity
 {
     public int Id { get; set; }
     public required string Name { get; set; }
@@ -15,8 +16,6 @@ public class Event
     public bool IsShared { get; set; }
     public int EventGroupId { get; set; }
     public int UserId { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
     public EventGroup? EventGroup { get; set; }
     public User? User { get; set; }
 }
