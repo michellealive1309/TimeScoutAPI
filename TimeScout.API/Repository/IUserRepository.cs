@@ -8,6 +8,8 @@ public interface IUserRepository
     Task<bool> CheckIfUserExistsAsync(string email);
     Task<User> CreateUserAsync(User newUser);
     Task<User> GetUserByEmailAndPasswordAsync(string email, string password);
+    Task<User> GetUserByIdAsync(int userId);
     Task<User> GetUserByRefreshTokenAsync(string refreshToken);
     Task<int> UpdateRefreshTokenAsync(int userId, string newRefreshToken);
+    Task<User> UpdateUserAsync(User user);
 }

@@ -36,6 +36,12 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync();
     }
 
+    public Task<User> GetUserByIdAsync(int userId)
+    {
+        return _context.Users.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == userId);
+    }
+
     public Task<User> GetUserByRefreshTokenAsync(string refreshToken)
     {
         return _context.Users.AsNoTracking()
@@ -55,5 +61,23 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
 
         return user.Id;
+    }
+
+    public async Task<User> UpdateUserAsync(User user)
+    {
+        var userToUpdate = await _context.Users.FindAsync(user.Id);
+
+        if (userToUpdate == null)
+        {
+            return null;
+        }
+
+        userToUpdate.Username = user.Username;
+        userToUpdate.FirstName = user.FirstName;
+        userToUpdate.LastName = user.LastName;
+
+        await _context.SaveChangesAsync();
+
+        return userToUpdate;
     }
 }
