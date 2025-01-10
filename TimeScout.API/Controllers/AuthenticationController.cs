@@ -46,5 +46,28 @@ namespace TimeScout.API.Controllers
 
             return Ok(LoginResponseDto);
         }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshRequestDto refreshRequestDto)
+        {
+            var user = await _identityService.GetUserByRefreshTokenAsync(refreshRequestDto.RefreshToken);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var accessToken = _identityService.GenerateJSONWebToken(user.Email, user.Id.ToString(), user.Role);
+            var refreshToken = _identityService.GenerateRefreshToken();
+            var LoginResponseDto = new LoginResponseDto
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
+            };
+
+            await _identityService.UpdateRefreshTokenAsync(user.Id, refreshToken);
+
+            return Ok(LoginResponseDto);
+        }
     }
 }
