@@ -74,5 +74,24 @@ namespace TimeScout.API.Controllers
 
             return Ok(LoginResponseDto);
         }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var newUser = _mapper.Map<User>(registerRequestDto);
+            var created = await _identityService.CreateUserAsync(newUser);
+
+            if (!created)
+            {
+                return BadRequest("User already exists.");
+            }
+
+            return Ok();
+        }
     }
 }
