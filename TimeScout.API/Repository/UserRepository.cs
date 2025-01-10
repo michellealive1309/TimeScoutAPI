@@ -15,6 +15,20 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
+    public async Task<bool> CheckIfUserExistsAsync(string email)
+    {
+        return await _context.Users.AnyAsync(u => u.Email == email);
+    }
+
+    public async Task<User> CreateUserAsync(User newUser)
+    {
+
+        await _context.Users.AddAsync(newUser);
+        await _context.SaveChangesAsync();
+        
+        return newUser;
+    }
+
     public Task<User> GetUserByEmailAndPasswordAsync(string email, string password)
     {
         return _context.Users.AsNoTracking()
@@ -25,8 +39,7 @@ public class UserRepository : IUserRepository
     public Task<User> GetUserByRefreshTokenAsync(string refreshToken)
     {
         return _context.Users.AsNoTracking()
-            .Where(u => u.RefreshToken == refreshToken)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
     }
 
     public async Task<int> UpdateRefreshTokenAsync(int userId, string newRefreshToken)
