@@ -4,8 +4,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using TimeScout.API.DTOs.Login;
-using TimeScout.API.DTOs.Register;
 using TimeScout.API.Models;
 using TimeScout.API.Repository;
 
@@ -26,7 +24,21 @@ public class IdentityService : IIdentityService
 
     public Task<User> AuthenticateAsync(string email, string password)
     {
-        return _userRepository.GetUserByEmailAndPasswordAsync(email, password);
+        return _userRepository.GetUserByEmailAndPasswordAsync(email, HashPassword(password));
+    }
+
+    public async Task<bool> CreateUserAsync(User newUser)
+    {
+        if (await _userRepository.CheckIfUserExistsAsync(newUser.Email))
+        {
+            return false;
+        }
+
+        newUser.Password = HashPassword(newUser.Password);
+        newUser.Role = "User";
+        await _userRepository.CreateUserAsync(newUser);
+
+        return true;
     }
 
     public string GenerateJSONWebToken(string email, string userId, string role)
@@ -68,5 +80,14 @@ public class IdentityService : IIdentityService
     public Task<int> UpdateRefreshTokenAsync(int userId, string refreshToken)
     {
         return _userRepository.UpdateRefreshTokenAsync(userId, refreshToken);
+    }
+
+    private static string HashPassword(string password)
+    {
+        using var sha256 = SHA256.Create();
+        var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+        var hashedPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+
+        return hashedPassword;
     }
 }
