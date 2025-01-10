@@ -1,4 +1,5 @@
 using System;
+using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,20 @@ namespace TimeScout.API.Controllers
             }
 
             return Ok(users);
+        }
+
+        [HttpGet("logout")]
+        public async Task<IActionResult> LogoutAsync()
+        {
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var isDelete = await _userService.DeleteRefreshTokenAsync(userId);
+
+            if (!isDelete)
+            {
+                return NotFound("User not found");
+            }
+
+            return Ok("User logged out successfully");
         }
 
         [HttpPut]

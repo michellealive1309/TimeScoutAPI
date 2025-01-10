@@ -12,6 +12,12 @@ public class UserService : IUserService
     {
         _userRepository = userRepository;
     }
+
+    public Task<bool> DeleteRefreshTokenAsync(int userId)
+    {
+        return _userRepository.DeleteRefreshTokenAsync(userId);
+    }
+
     public Task<User> GetUserByIdAsync(int userId)
     {
         return _userRepository.GetUserByIdAsync(userId);

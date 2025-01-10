@@ -5,6 +5,7 @@ namespace TimeScout.API.Services;
 
 public interface IUserService
 {
+    Task<bool> DeleteRefreshTokenAsync(int userId);
     Task<User> GetUserByIdAsync(int userId);
     Task<User> UpdateUserAsync(User user);
 }

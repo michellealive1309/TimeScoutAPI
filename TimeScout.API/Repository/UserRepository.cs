@@ -29,6 +29,21 @@ public class UserRepository : IUserRepository
         return newUser;
     }
 
+    public async Task<bool> DeleteRefreshTokenAsync(int userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+
+        if (user == null)
+        {
+            return false;
+        }
+
+        user.RefreshToken = null;
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
     public Task<User> GetUserByEmailAndPasswordAsync(string email, string password)
     {
         return _context.Users.AsNoTracking()
