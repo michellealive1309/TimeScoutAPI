@@ -1,8 +1,10 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeScout.API.DTOs.Authentication;
 using TimeScout.API.DTOs.Login;
+using TimeScout.API.Models;
 using TimeScout.API.Services;
 
 namespace TimeScout.API.Controllers
@@ -13,14 +15,17 @@ namespace TimeScout.API.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IIdentityService _identityService;
+        private readonly IMapper _mapper;
         private readonly ILogger<AuthenticationController> _logger;
 
         public AuthenticationController(
             IIdentityService identityService,
+            IMapper mapper,
             ILogger<AuthenticationController> logger
         )
         {
             _identityService = identityService;
+            _mapper = mapper;
             _logger = logger;
         }
 
