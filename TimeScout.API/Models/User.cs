@@ -1,8 +1,9 @@
 using System;
+using TimeScout.API.Entity;
 
 namespace TimeScout.API.Models;
 
-public class User
+public class User : BaseEntity
 {
     public int Id { get; set; }
     public required string Username { get; set; }
@@ -11,6 +12,6 @@ public class User
     public required string Role { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public string? RefreshToken { get; set; }
+    public ICollection<EventGroup>? EventGroups { get; set; }
 }
