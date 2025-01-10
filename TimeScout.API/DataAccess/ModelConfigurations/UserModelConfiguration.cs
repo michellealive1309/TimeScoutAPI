@@ -18,8 +18,16 @@ public class UserModelConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany<Event>()
                 .WithOne(e => e.User)
                 .HasForeignKey(e => e.UserId);
-        builder.HasMany<EventGroupMember>()
-                .WithOne(egm => egm.User)
-                .HasForeignKey(egm => egm.UserId);
+        builder.HasMany<EventGroup>()
+                .WithMany()
+                .UsingEntity<EventGroupMember>(
+                    j => j.HasOne(egm => egm.EventGroup)
+                        .WithMany()
+                        .HasForeignKey(egm => egm.EventGroupId),
+                    j => j.HasOne(egm => egm.User)
+                        .WithMany()
+                        .HasForeignKey(egm => egm.UserId),
+                    j => j.ToTable("event_group_members")
+               );
     }
 }
