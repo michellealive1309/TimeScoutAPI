@@ -44,7 +44,8 @@ namespace TimeScout.API.Controllers
             var LoginResponseDto = new LoginResponseDto
             {
                 AccessToken = accessToken,
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                UserId = user.Id
             };
 
             await _identityService.UpdateRefreshTokenAsync(user.Id, refreshToken);
@@ -53,9 +54,9 @@ namespace TimeScout.API.Controllers
         }
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> Refresh([FromBody] RefreshRequestDto refreshRequestDto)
+        public async Task<IActionResult> Refresh([FromBody] RefreshRequestDto refreshRequest)
         {
-            var user = await _identityService.GetUserByRefreshTokenAsync(refreshRequestDto.RefreshToken);
+            var user = await _identityService.GetUserByRefreshTokenAsync(refreshRequest.RefreshToken);
 
             if (user == null)
             {
@@ -67,7 +68,8 @@ namespace TimeScout.API.Controllers
             var LoginResponseDto = new LoginResponseDto
             {
                 AccessToken = accessToken,
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                UserId = user.Id
             };
 
             await _identityService.UpdateRefreshTokenAsync(user.Id, refreshToken);
@@ -76,14 +78,14 @@ namespace TimeScout.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var newUser = _mapper.Map<User>(registerRequestDto);
+            var newUser = _mapper.Map<User>(registerRequest);
             var created = await _identityService.CreateUserAsync(newUser);
 
             if (!created)
