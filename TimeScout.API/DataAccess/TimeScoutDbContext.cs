@@ -43,7 +43,7 @@ public class TimeScoutDbContext : DbContext
                     entity.Created = DateTime.UtcNow;
                     break;
                 case EntityState.Deleted:
-                    entry.State = EntityState.Unchanged;
+                    entry.State = EntityState.Modified;
                     entity.IsDeleted = true;
                     break;
             }
