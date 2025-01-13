@@ -1,8 +1,9 @@
 using System;
+using TimeScout.API.Entity;
 
 namespace TimeScout.API.Models;
 
-public class EventGroup
+public class EventGroup : BaseEntity
 {
     public int Id { get; set; }
     public required string Name { get; set; }

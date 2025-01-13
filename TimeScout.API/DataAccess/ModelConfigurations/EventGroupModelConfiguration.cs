@@ -12,6 +12,8 @@ public class EventGroupModelConfiguration : IEntityTypeConfiguration<EventGroup>
         builder.ToTable("event_groups");
         builder.HasKey(eg => eg.Id);
 
+        builder.HasQueryFilter(eg => !eg.IsDeleted);
+
         builder.HasMany<Event>()
                .WithOne(e => e.EventGroup)
                .HasForeignKey(e => e.EventGroupId);

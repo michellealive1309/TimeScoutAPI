@@ -11,6 +11,8 @@ public class EventModelConfiguration : IEntityTypeConfiguration<Event>
     {
         builder.ToTable("events");
         builder.HasKey(e => e.Id);
+
+        builder.HasQueryFilter(e => !e.IsDeleted);
         
         builder.HasIndex(e => e.EventGroupId);
         builder.HasIndex(e => e.UserId);
