@@ -44,6 +44,22 @@ public class UserRepository : IUserRepository
         return true;
     }
 
+    public async Task<bool> DeleteUserAsync(int userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+
+        if (user == null)
+        {
+            return false;
+        }
+
+        user.RecoveryEndDate = DateTime.UtcNow.AddDays(30);
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
     public Task<User> GetUserByEmailAndPasswordAsync(string email, string password)
     {
         return _context.Users.AsNoTracking()

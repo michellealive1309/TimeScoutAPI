@@ -18,6 +18,11 @@ public class UserService : IUserService
         return _userRepository.DeleteRefreshTokenAsync(userId);
     }
 
+    public Task<bool> DeleteUserAsync(int userId)
+    {
+        return _userRepository.DeleteUserAsync(userId);
+    }
+
     public Task<User> GetUserByIdAsync(int userId)
     {
         return _userRepository.GetUserByIdAsync(userId);
