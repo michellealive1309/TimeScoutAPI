@@ -69,7 +69,7 @@ public class UserRepository : IUserRepository
 
     public Task<User> GetUserByIdAsync(int userId)
     {
-        return _context.Users.AsNoTracking()
+        return _context.Users.AsNoTracking().IgnoreQueryFilters()
             .FirstOrDefaultAsync(u => u.Id == userId);
     }
 
