@@ -32,7 +32,7 @@ public class TimeScoutDbContext : DbContext
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var entries = ChangeTracker.Entries()
-            .Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));
+            .Where(e => e.Entity is BaseEntity);
 
         foreach (var entry in entries)
         {
@@ -42,13 +42,15 @@ public class TimeScoutDbContext : DbContext
                 case EntityState.Added:
                     entity.Created = DateTime.UtcNow;
                     break;
+                case EntityState.Modified:
+                    entity.Modified = DateTime.UtcNow;
+                    break;
                 case EntityState.Deleted:
                     entry.State = EntityState.Modified;
+                    entity.Modified = DateTime.UtcNow;
                     entity.IsDeleted = true;
                     break;
             }
-
-            entity.Modified = DateTime.UtcNow;
         }
 
         ChangeTracker.DetectChanges();
