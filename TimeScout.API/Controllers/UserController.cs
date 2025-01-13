@@ -43,10 +43,11 @@ namespace TimeScout.API.Controllers
             return Ok("User deleted successfully");
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserAsync(int id)
+        [HttpGet]
+        public async Task<IActionResult> GetUserAsync()
         {
-            var users = await _userService.GetUserByIdAsync(id);
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var users = await _userService.GetUserByIdAsync(userId);
 
             if (users == null)
             {
