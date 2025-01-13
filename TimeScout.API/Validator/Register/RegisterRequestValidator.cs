@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using FluentValidation;
 using TimeScout.API.DTOs.Authentication;
 
@@ -8,6 +9,10 @@ public class RegisterRequestValidator : AbstractValidator<RegisterRequestDto>
 {
     public RegisterRequestValidator()
     {
+        RuleFor(x => x.Username)
+            .MaximumLength(100)
+            .NotEmpty();
+
         RuleFor(x => x.Email)
             .NotEmpty()
             .EmailAddress();
