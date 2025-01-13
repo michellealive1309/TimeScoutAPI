@@ -28,6 +28,18 @@ public class UserService : IUserService
         return _userRepository.GetUserByIdAsync(userId);
     }
 
+    public async Task<bool> RecoverUserAsync(int userId)
+    {
+        var user = await _userRepository.GetUserByIdAsync(userId);
+
+        if (user == null || user.RecoveryEndDate < DateTime.UtcNow)
+        {
+            return false;
+        }
+
+        return await _userRepository.RecoverUserAsync(userId);
+    }
+
     public Task<User> UpdateUserAsync(User user)
     {
         return _userRepository.UpdateUserAsync(user);

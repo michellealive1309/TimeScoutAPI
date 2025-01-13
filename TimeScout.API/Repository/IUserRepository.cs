@@ -12,6 +12,7 @@ public interface IUserRepository
     Task<User> GetUserByEmailAndPasswordAsync(string email, string password);
     Task<User> GetUserByIdAsync(int userId);
     Task<User> GetUserByRefreshTokenAsync(string refreshToken);
+    Task<bool> RecoverUserAsync(int userId);
     Task<int> UpdateRefreshTokenAsync(int userId, string newRefreshToken);
     Task<User> UpdateUserAsync(User user);
 }

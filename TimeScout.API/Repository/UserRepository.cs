@@ -79,6 +79,22 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
     }
 
+    public async Task<bool> RecoverUserAsync(int userId)
+    {
+        var user = await _context.Users.IgnoreQueryFilters().FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null)
+        {
+            return false;
+        }
+
+        user.RecoveryEndDate = null;
+        user.IsDeleted = false;
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
     public async Task<int> UpdateRefreshTokenAsync(int userId, string newRefreshToken)
     {
         var user = await _context.Users.FindAsync(userId);

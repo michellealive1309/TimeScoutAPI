@@ -70,6 +70,20 @@ namespace TimeScout.API.Controllers
             return Ok("User logged out successfully");
         }
 
+        [HttpGet("recover")]
+        public async Task<IActionResult> RecoverUserAsync()
+        {
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var isRecover = await _userService.RecoverUserAsync(userId);
+
+            if (!isRecover)
+            {
+                return BadRequest("User recovery failed");
+            }
+
+            return Ok("User recovered successfully");
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateRequestDto userUpdateRequest)
         {
