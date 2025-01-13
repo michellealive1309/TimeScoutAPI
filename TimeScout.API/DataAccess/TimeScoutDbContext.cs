@@ -37,9 +37,15 @@ public class TimeScoutDbContext : DbContext
         foreach (var entry in entries)
         {
             var entity = (BaseEntity)entry.Entity;
-            if (entry.State == EntityState.Added)
+            switch (entry.State)
             {
-                entity.Created = DateTime.UtcNow;
+                case EntityState.Added:
+                    entity.Created = DateTime.UtcNow;
+                    break;
+                case EntityState.Deleted:
+                    entry.State = EntityState.Unchanged;
+                    entity.IsDeleted = true;
+                    break;
             }
 
             entity.Modified = DateTime.UtcNow;
