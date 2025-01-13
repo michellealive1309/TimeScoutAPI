@@ -70,6 +70,10 @@ namespace TimeScout.API.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("event_group_id");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
                     b.Property<bool>("IsShared")
                         .HasColumnType("boolean")
                         .HasColumnName("is_shared");
@@ -115,6 +119,18 @@ namespace TimeScout.API.DataAccess.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modified");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -168,6 +184,10 @@ namespace TimeScout.API.DataAccess.Migrations
                         .HasColumnType("text")
                         .HasColumnName("first_name");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
                     b.Property<string>("LastName")
                         .HasColumnType("text")
                         .HasColumnName("last_name");
@@ -180,6 +200,10 @@ namespace TimeScout.API.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("password");
+
+                    b.Property<DateTime?>("RecoveryEndDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("recovery_end_date");
 
                     b.Property<string>("RefreshToken")
                         .HasColumnType("text")
