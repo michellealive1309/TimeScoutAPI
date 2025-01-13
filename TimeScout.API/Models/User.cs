@@ -13,5 +13,6 @@ public class User : BaseEntity
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? RefreshToken { get; set; }
+    public DateTime? RecoveryEndDate { get; set; }
     public ICollection<EventGroup>? EventGroups { get; set; }
 }
