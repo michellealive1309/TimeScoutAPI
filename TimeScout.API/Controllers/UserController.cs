@@ -50,7 +50,7 @@ namespace TimeScout.API.Controllers
 
             if (!isDelete)
             {
-                return NotFound("User not found");
+                return BadRequest("User logout failed");
             }
 
             return Ok("User logged out successfully");
