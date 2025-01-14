@@ -95,19 +95,19 @@ public class UserRepository : IUserRepository
         return true;
     }
 
-    public async Task<int> UpdateRefreshTokenAsync(int userId, string newRefreshToken)
+    public async Task<bool> UpdateRefreshTokenAsync(int userId, string newRefreshToken)
     {
         var user = await _context.Users.FindAsync(userId);
 
         if (user == null)
         {
-            return 0;
+            return false;
         }
 
         user.RefreshToken = newRefreshToken;
         await _context.SaveChangesAsync();
 
-        return user.Id;
+        return true;
     }
 
     public async Task<User> UpdateUserAsync(User user)

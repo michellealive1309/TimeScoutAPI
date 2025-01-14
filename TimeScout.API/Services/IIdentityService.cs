@@ -10,5 +10,5 @@ public interface IIdentityService
     string GenerateJSONWebToken(string email, string userId, string role);
     string GenerateRefreshToken();
     Task<User> GetUserByRefreshTokenAsync(string refreshToken);
-    Task<int> UpdateRefreshTokenAsync(int userId, string newRefreshToken);
+    Task<bool> UpdateRefreshTokenAsync(int userId, string newRefreshToken);
 }

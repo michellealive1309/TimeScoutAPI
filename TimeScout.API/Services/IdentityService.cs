@@ -1,4 +1,3 @@
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -77,7 +76,7 @@ public class IdentityService : IIdentityService
         return _userRepository.GetUserByRefreshTokenAsync(refreshToken);
     }
 
-    public Task<int> UpdateRefreshTokenAsync(int userId, string refreshToken)
+    public Task<bool> UpdateRefreshTokenAsync(int userId, string refreshToken)
     {
         return _userRepository.UpdateRefreshTokenAsync(userId, refreshToken);
     }

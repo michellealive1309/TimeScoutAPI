@@ -1,4 +1,3 @@
-using System;
 using TimeScout.API.Models;
 
 namespace TimeScout.API.Repository;
@@ -13,6 +12,6 @@ public interface IUserRepository
     Task<User> GetUserByIdAsync(int userId);
     Task<User> GetUserByRefreshTokenAsync(string refreshToken);
     Task<bool> RecoverUserAsync(int userId);
-    Task<int> UpdateRefreshTokenAsync(int userId, string newRefreshToken);
+    Task<bool> UpdateRefreshTokenAsync(int userId, string newRefreshToken);
     Task<User> UpdateUserAsync(User user);
 }

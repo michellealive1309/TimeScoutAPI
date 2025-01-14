@@ -47,7 +47,7 @@ namespace TimeScout.Tests.Controllers
             identityServiceMock.Setup(x => x.AuthenticateAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(user);
             identityServiceMock.Setup(x => x.GenerateJSONWebToken(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(It.IsAny<string>());
             identityServiceMock.Setup(x => x.GenerateRefreshToken()).Returns(It.IsAny<string>());
-            identityServiceMock.Setup(x => x.UpdateRefreshTokenAsync(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(It.IsAny<int>());
+            identityServiceMock.Setup(x => x.UpdateRefreshTokenAsync(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(true);
 
             var autoMapperMock = new Mock<IMapper>();
             var loggerMock = new Mock<ILogger<AuthenticationController>>();
@@ -99,7 +99,7 @@ namespace TimeScout.Tests.Controllers
             identityServiceMock.Setup(x => x.GetUserByRefreshTokenAsync(It.IsAny<string>())).ReturnsAsync(user);
             identityServiceMock.Setup(x => x.GenerateJSONWebToken(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(It.IsAny<string>());
             identityServiceMock.Setup(x => x.GenerateRefreshToken()).Returns(It.IsAny<string>());
-            identityServiceMock.Setup(x => x.UpdateRefreshTokenAsync(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(It.IsAny<int>());
+            identityServiceMock.Setup(x => x.UpdateRefreshTokenAsync(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(true);
 
             var autoMapperMock = new Mock<IMapper>();
             var loggerMock = new Mock<ILogger<AuthenticationController>>();
