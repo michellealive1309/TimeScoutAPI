@@ -120,7 +120,11 @@ namespace TimeScout.Tests.Controllers
         public async Task Test_Register_Validation_Fail_Return_BadRequest_Result()
         {
             // Arrange
-            var registerRequestDto = new RegisterRequestDto();
+            var registerRequestDto = new RegisterRequestDto {
+                Email = "john.doe@mail.com",
+                FirstName = "John",
+                LastName = "Doe"
+            };
             var identityServiceMock = new Mock<IIdentityService>();
             var autoMapperMock = new Mock<IMapper>();
             var loggerMock = new Mock<ILogger<AuthenticationController>>();
@@ -129,6 +133,9 @@ namespace TimeScout.Tests.Controllers
                 autoMapperMock.Object,
                 loggerMock.Object
             );
+
+            authenticationController.ModelState.AddModelError("Username", "Username is required");
+            authenticationController.ModelState.AddModelError("Password", "Password is required");
 
             // Act
             var result = await authenticationController.Register(registerRequestDto);
