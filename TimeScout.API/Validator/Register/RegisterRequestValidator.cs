@@ -1,5 +1,3 @@
-using System;
-using System.Data;
 using FluentValidation;
 using TimeScout.API.DTOs.Authentication;
 
