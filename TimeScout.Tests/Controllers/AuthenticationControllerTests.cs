@@ -13,7 +13,7 @@ namespace TimeScout.Tests.Controllers
     public class AuthenticationControllerTests
     {
         [Fact]
-        public async Task Test_Login_Return_Unauthorized_Result()
+        public async Task Test_Login_Should_Return_Unauthorized_Result()
         {
             // Arrange
             var loginRequestDto = new LoginRequestDto();
@@ -37,7 +37,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Login_Return_Ok_Result()
+        public async Task Test_Login_Should_Return_Ok_Result()
         {
             // Arrange
             var loginRequestDto = new LoginRequestDto();
@@ -65,7 +65,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Refresh_Return_Unauthorized_Result()
+        public async Task Test_Refresh_Should_Return_Unauthorized_Result()
         {
             // Arrange
             var refreshRequestDto = new RefreshRequestDto();
@@ -89,7 +89,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Refresh_Return_Ok_Result()
+        public async Task Test_Refresh_Should_Return_Ok_Result()
         {
             // Arrange
             var refreshRequestDto = new RefreshRequestDto();
@@ -117,7 +117,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Register_Validation_Fail_Return_BadRequest_Result()
+        public async Task Test_Register_Should_Return_BadRequest_Result()
         {
             // Arrange
             var registerRequestDto = new RegisterRequestDto {
@@ -145,7 +145,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Register_User_Existed_Return_BadRequest_Result()
+        public async Task Test_Register_User_Should_Return_BadRequest_Result()
         {
             // Arrange
             var registerRequestDto = new RegisterRequestDto();
@@ -169,7 +169,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Register_Success_Return_Ok_Result()
+        public async Task Test_Register_Should_Return_Ok_Result()
         {
             // Arrange
             var registerRequestDto = new RegisterRequestDto();
