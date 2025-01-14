@@ -16,7 +16,7 @@ namespace TimeScout.Tests.Controllers
     public class UserControllerTests
     {
         [Fact]
-        public async Task Test_Delete_User_Fail_Return_BadRequest_Result()
+        public async Task Test_Delete_User_Should_Return_BadRequest_Result()
         {
             // Arrange
             var userServiceMock = new Mock<IUserService>();
@@ -48,7 +48,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Delete_User_Success_Return_Ok_Result()
+        public async Task Test_Delete_User_Should_Return_Ok_Result()
         {
             // Arrange
             var userServiceMock = new Mock<IUserService>();
@@ -80,7 +80,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Get_User_Not_Found_Return_NotFound_Result()
+        public async Task Test_Get_User_Should_Return_NotFound_Result()
         {
             // Arrange
             var userServiceMock = new Mock<IUserService>();
@@ -112,7 +112,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Get_User_Success_Return_Ok_Result()
+        public async Task Test_Get_User_Should_Return_Ok_Result()
         {
             // Arrange
             var user = CreateUser();
@@ -145,7 +145,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Logout_Faile_Return_BadRequest_Result()
+        public async Task Test_Logout_Should_Return_BadRequest_Result()
         {
             // Arrange
             var userServiceMock = new Mock<IUserService>();
@@ -176,7 +176,8 @@ namespace TimeScout.Tests.Controllers
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
-        public async Task Test_Logout_Success_Return_Ok_Result()
+        [Fact]
+        public async Task Test_Logout_Should_Return_Ok_Result()
         {
             // Arrange
             var userServiceMock = new Mock<IUserService>();
@@ -208,7 +209,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Recover_User_Fail_Return_BadRequest_Result()
+        public async Task Test_Recover_User_Should_Return_BadRequest_Result()
         {
             // Arrange
             var userServiceMock = new Mock<IUserService>();
@@ -240,7 +241,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Recover_User_Success_Return_Ok_Result()
+        public async Task Test_Recover_User_Should_Return_Ok_Result()
         {
             // Arrange
             var userServiceMock = new Mock<IUserService>();
@@ -272,7 +273,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Update_User_Validation_Fail_Return_BadRequest_Result()
+        public async Task Test_Update_User_Should_Return_BadRequest_Result()
         {
             // Arrange
             var userUpdateRequestDto = new UserUpdateRequestDto {
@@ -299,7 +300,7 @@ namespace TimeScout.Tests.Controllers
         }
 
         [Fact]
-        public async Task Test_Update_User_Success_Return_Ok_Result()
+        public async Task Test_Update_User_Should_Return_Ok_Result()
         {
             var userUpdateRequestDto = new UserUpdateRequestDto();
             var user = CreateUser();
