@@ -2,6 +2,7 @@ using System;
 using TimeScout.API.Models;
 using Microsoft.EntityFrameworkCore;
 using TimeScout.API.DataAccess.ModelConfigurations;
+using TimeScout.API.Entity;
 
 namespace TimeScout.API.DataAccess;
 
@@ -26,5 +27,33 @@ public class TimeScoutDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSnakeCaseNamingConvention();
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var entries = ChangeTracker.Entries()
+            .Where(e => e.Entity is BaseEntity);
+
+        foreach (var entry in entries)
+        {
+            var entity = (BaseEntity)entry.Entity;
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entity.Created = DateTime.UtcNow;
+                    break;
+                case EntityState.Modified:
+                    entity.Modified = DateTime.UtcNow;
+                    break;
+                case EntityState.Deleted:
+                    entry.State = EntityState.Modified;
+                    entity.Modified = DateTime.UtcNow;
+                    entity.IsDeleted = true;
+                    break;
+            }
+        }
+
+        ChangeTracker.DetectChanges();
+        return base.SaveChangesAsync(cancellationToken);
     }
 }

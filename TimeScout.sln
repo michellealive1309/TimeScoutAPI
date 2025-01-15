@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeScout.API", "TimeScout.API\TimeScout.API.csproj", "{2BEDA04C-48BD-49A7-A4CD-B0903F48DDF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeScout.Tests", "TimeScout.Tests\TimeScout.Tests.csproj", "{8E623B31-9A60-493B-8F49-CF96DD7BD383}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{2BEDA04C-48BD-49A7-A4CD-B0903F48DDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BEDA04C-48BD-49A7-A4CD-B0903F48DDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BEDA04C-48BD-49A7-A4CD-B0903F48DDF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E623B31-9A60-493B-8F49-CF96DD7BD383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E623B31-9A60-493B-8F49-CF96DD7BD383}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E623B31-9A60-493B-8F49-CF96DD7BD383}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E623B31-9A60-493B-8F49-CF96DD7BD383}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

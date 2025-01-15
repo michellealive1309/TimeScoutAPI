@@ -12,6 +12,8 @@ public class UserModelConfiguration : IEntityTypeConfiguration<User>
         builder.ToTable("users");
         builder.HasKey(u => u.Id);
 
+        builder.HasQueryFilter(u => !u.IsDeleted);
+
         builder.HasIndex(u => u.Email)
                .IsUnique();
 
