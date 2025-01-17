@@ -31,6 +31,22 @@ namespace TimeScout.API.Controllers
             _logger = logger;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetEventAsync(int id)
+        {
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var result = await _eventService.GetEventByIdAsync(id, userId);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            var responseDto = _mapper.Map<EventResponseDto>(result);
+
+            return Ok(responseDto);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateEventAsync([FromBody] EventCreateRequestDto eventCreateRequest)
         {
