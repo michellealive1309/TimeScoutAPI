@@ -17,8 +17,8 @@ public class EventGroupModelConfiguration : IEntityTypeConfiguration<EventGroup>
         builder.HasMany<Event>()
                .WithOne(e => e.EventGroup)
                .HasForeignKey(e => e.EventGroupId);
-        builder.HasMany<User>()
-               .WithMany()
+        builder.HasMany(eg => eg.Members)
+               .WithMany(u => u.EventGroups)
                .UsingEntity<EventGroupMember>(
                     j => j.HasOne(egm => egm.User)
                          .WithMany()
