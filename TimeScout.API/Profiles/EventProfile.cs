@@ -12,5 +12,12 @@ public class EventProfile : Profile
             .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => DateOnly.ParseExact(src.StartDate!, "yyyy-mm-dd")))
             .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => TimeOnly.ParseExact(src.StartTime!, "HH:mm")))
             .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => DateOnly.ParseExact(src.EndDate!, "yyyy-mm-dd")))
+            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => TimeOnly.ParseExact(src.EndTime!, "HH:mm")));
+
+        CreateMap<EventUpdateRequestDto, Event>()
+            .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => DateOnly.ParseExact(src.StartDate!, "yyyy-mm-dd")))
+            .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => TimeOnly.ParseExact(src.StartTime!, "HH:mm")))
+            .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => DateOnly.ParseExact(src.EndDate!, "yyyy-mm-dd")))
+            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => TimeOnly.ParseExact(src.EndTime!, "HH:mm")));
     }
 }

@@ -57,5 +57,26 @@ namespace TimeScout.API.Controllers
 
             return Ok("Event creation success.");
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateEventAsync([FromBody] EventUpdateRequestDto eventUpdateRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updateEvent = _mapper.Map<Event>(eventUpdateRequest);
+            var result = await _eventService.UpdateEventAsync(updateEvent);
+
+            if (result == null)
+            {
+                return BadRequest("Event updating failed.");
+            }
+
+            var responseDto = _mapper.Map<EventResponseDto>(updateEvent);
+
+            return Ok(responseDto);
+        }
     }
 }
