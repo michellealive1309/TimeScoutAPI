@@ -31,6 +31,7 @@ public class StartUp
         // Add service scoped
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IEventService, EventService>();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
