@@ -1,4 +1,3 @@
-using System;
 using TimeScout.API.Entity;
 
 namespace TimeScout.API.Models;
@@ -14,7 +13,7 @@ public class Event : BaseEntity
     public TimeOnly EndTime { get; set; }
     public TimeSpan Duration => EndTime.ToTimeSpan() - StartTime.ToTimeSpan();
     public bool IsShared { get; set; }
-    public int EventGroupId { get; set; }
+    public int? EventGroupId { get; set; }
     public int UserId { get; set; }
     public EventGroup? EventGroup { get; set; }
     public User? User { get; set; }
