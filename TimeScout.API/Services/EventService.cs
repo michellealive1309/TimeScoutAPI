@@ -39,6 +39,11 @@ public class EventService : IEventService
         return true;
     }
 
+    public Task<Event?> GetEventByIdAsync(int id, int userId)
+    {
+        return _eventRepository.GetEventByIdAsync(id, userId);
+    }
+
     public async Task<Event?> UpdateEventAsync(Event updateEvent)
     {
         var toUpdateEvent = await _eventRepository.GetEventByIdAsync(updateEvent.Id, updateEvent.UserId); 

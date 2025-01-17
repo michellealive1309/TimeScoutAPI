@@ -31,6 +31,18 @@ namespace TimeScout.API.Controllers
             _logger = logger;
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEventAsync(int id)
+        {
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (!await _eventService.DeleteEventAsync(id, userId))
+            {
+                return BadRequest("Event deletion failed.");
+            }
+
+            return Ok("Event deletion success.");
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEventAsync(int id)
         {
