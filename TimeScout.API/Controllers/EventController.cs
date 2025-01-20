@@ -44,7 +44,7 @@ namespace TimeScout.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEventAsync(int id)
+        public async Task<ActionResult<EventResponseDto>> GetEventAsync(int id)
         {
             int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var result = await _eventService.GetEventByIdAsync(id, userId);
@@ -87,7 +87,7 @@ namespace TimeScout.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateEventAsync([FromBody] EventUpdateRequestDto eventUpdateRequest)
+        public async Task<ActionResult<EventResponseDto>> UpdateEventAsync([FromBody] EventUpdateRequestDto eventUpdateRequest)
         {
             if (!ModelState.IsValid)
             {
