@@ -14,11 +14,12 @@ public class EventGroupModelConfiguration : IEntityTypeConfiguration<EventGroup>
 
         builder.HasQueryFilter(eg => !eg.IsDeleted);
 
-        builder.HasMany<Event>()
+        builder.HasMany(eg => eg.Events)
                .WithOne(e => e.EventGroup)
-               .HasForeignKey(e => e.EventGroupId);
-        builder.HasMany<User>()
-               .WithMany()
+               .HasForeignKey(e => e.EventGroupId)
+               .IsRequired(false);
+        builder.HasMany(eg => eg.Members)
+               .WithMany(u => u.EventGroups)
                .UsingEntity<EventGroupMember>(
                     j => j.HasOne(egm => egm.User)
                          .WithMany()

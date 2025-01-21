@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TimeScout.API.DataAccess;
@@ -11,9 +12,11 @@ using TimeScout.API.DataAccess;
 namespace TimeScout.API.DataAccess.Migrations
 {
     [DbContext(typeof(TimeScoutDbContext))]
-    partial class TimeScoutDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250117045339_RemoveUserRelationWithEventGroup")]
+    partial class RemoveUserRelationWithEventGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +50,7 @@ namespace TimeScout.API.DataAccess.Migrations
                         .HasColumnType("time without time zone")
                         .HasColumnName("end_time");
 
-                    b.Property<int?>("EventGroupId")
+                    b.Property<int>("EventGroupId")
                         .HasColumnType("integer")
                         .HasColumnName("event_group_id");
 
@@ -215,7 +218,9 @@ namespace TimeScout.API.DataAccess.Migrations
                     b.HasOne("TimeScout.API.Models.EventGroup", "EventGroup")
                         .WithMany("Events")
                         .HasForeignKey("EventGroupId")
-                        .HasConstraintName("fk_events_groups_event_group_id");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_events_event_groups_event_group_id");
 
                     b.HasOne("TimeScout.API.Models.User", "User")
                         .WithMany()

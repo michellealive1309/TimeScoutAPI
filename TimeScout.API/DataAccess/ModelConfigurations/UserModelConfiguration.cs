@@ -18,11 +18,11 @@ public class UserModelConfiguration : IEntityTypeConfiguration<User>
                .IsUnique();
 
         builder.HasMany<Event>()
-                .WithOne(e => e.User)
-                .HasForeignKey(e => e.UserId);
-        builder.HasMany<EventGroup>()
-                .WithMany()
-                .UsingEntity<EventGroupMember>(
+               .WithOne(e => e.User)
+               .HasForeignKey(e => e.UserId);
+        builder.HasMany(u => u.EventGroups)
+               .WithMany(eg => eg.Members)
+               .UsingEntity<EventGroupMember>(
                     j => j.HasOne(egm => egm.EventGroup)
                         .WithMany()
                         .HasForeignKey(egm => egm.EventGroupId),
