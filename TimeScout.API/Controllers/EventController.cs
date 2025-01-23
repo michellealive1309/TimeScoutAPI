@@ -59,6 +59,23 @@ namespace TimeScout.API.Controllers
             return Ok(responseDto);
         }
 
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<EventResponseDto>>> GetAllEventsAsync([FromQuery] string span, [FromQuery] DateTime date)
+        {
+            string[] spans = ["day", "week", "biweek", "month", "year"];
+            if (!spans.Contains(span))
+            {
+                ModelState.AddModelError("Span", "Span should be day, week, biweek, month, or year.");
+                return BadRequest(ModelState);
+            }
+
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var events = await _eventService.GetAllEventsAsync(span, date, userId);
+            var responseDto = _mapper.Map<IEnumerable<EventResponseDto>>(events);
+
+            return Ok(responseDto);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateEventAsync([FromBody] EventCreateRequestDto eventCreateRequest)
         {
