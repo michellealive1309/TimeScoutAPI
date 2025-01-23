@@ -2,6 +2,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -76,6 +77,75 @@ namespace TimeScout.Tests.Controllers
 
             // Assert
             Assert.IsType<OkObjectResult>(actual);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("lorem")]
+        [InlineData(null)]
+        public async Task Test_Get_All_Event_Should_Return_BadRequest_Result(string span)
+        {
+            // Arrange
+            var now = DateTime.UtcNow;
+            var eventServiceMock = new Mock<IEventService>();
+            var autoMapperMock = new Mock<IMapper>();
+            var loggerMock = new Mock<ILogger<EventController>>();
+            var eventController = new EventController(
+                eventServiceMock.Object,
+                autoMapperMock.Object,
+                loggerMock.Object
+            );
+
+            // Act
+            var actual = await eventController.GetAllEventsAsync(span, now);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(actual.Result);
+        }
+
+        [Theory]
+        [InlineData("day")]
+        [InlineData("week")]
+        [InlineData("biweek")]
+        [InlineData("month")]
+        [InlineData("year")]
+        public async Task Test_Get_All_Event_Should_Return_OkResult_Result(string span)
+        {
+            // Arrange
+            var now = DateTime.UtcNow;
+            var events = new List<Event> {
+                new Event {
+                    Name = "Test",
+                    StartDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                    StartTime = TimeOnly.FromDateTime(DateTime.UtcNow)
+                }
+            };
+            var eventServiceMock = new Mock<IEventService>();
+
+            eventServiceMock.Setup(x => x.GetAllEventsAsync(span, now, It.IsAny<int>())).ReturnsAsync(events);
+
+            var autoMapperMock = new Mock<IMapper>();
+            var loggerMock = new Mock<ILogger<EventController>>();
+            var controllerContext = new ControllerContext() {
+                HttpContext = new DefaultHttpContext() {
+                    User = new ClaimsPrincipal(new ClaimsIdentity([
+                        new Claim(ClaimTypes.NameIdentifier, "1")
+                    ]))
+                }
+            };
+            var eventController = new EventController(
+                eventServiceMock.Object,
+                autoMapperMock.Object,
+                loggerMock.Object
+            ) {
+                ControllerContext = controllerContext
+            };
+
+            // Act
+            var actual = await eventController.GetAllEventsAsync(span, now);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(actual.Result);
         }
 
         [Fact]
