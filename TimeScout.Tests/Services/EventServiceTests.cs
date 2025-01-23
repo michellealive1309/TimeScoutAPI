@@ -102,6 +102,38 @@ namespace TimeScout.Tests.Services
             Assert.True(actual);
         }
 
+        [Theory]
+        [InlineData("")]
+        [InlineData("day")]
+        [InlineData("week")]
+        [InlineData("biweek")]
+        [InlineData("month")]
+        [InlineData("year")]
+        public async Task Test_Get_All_Event_Should_Return_Event_List(string span)
+        {
+            // Arrange
+            DateTime now = DateTime.UtcNow;
+            var expected = new List<Event> {
+                new() {
+                    Name = "Test",
+                    StartDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                    StartTime = TimeOnly.FromDateTime(DateTime.UtcNow),
+                    EndDate = DateOnly.FromDateTime(DateTime.UtcNow)
+                }
+            };
+            var eventRepositoryMock = new Mock<IEventRepository>();
+
+            eventRepositoryMock.Setup(x => x.GetEventsByDateRangeAsync(It.IsAny<DateOnly>(), It.IsAny<DateOnly>(), 1)).ReturnsAsync(expected);
+
+            var eventService = new EventService(eventRepositoryMock.Object);
+
+            // Act
+            var actual = await eventService.GetAllEventsAsync(span, now, 1);
+
+            // Assert
+            Assert.Same(expected, actual);
+        }
+
         [Fact]
         public async Task Test_Get_Event_By_Id_Should_Return_Null()
         {

@@ -19,4 +19,14 @@ public class EventRepository : Repository<Event>, IEventRepository
             .Where(e => e.UserId == userId)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
+
+    public async Task<IEnumerable<Event>> GetEventsByDateRangeAsync(DateOnly start, DateOnly end, int userId)
+    {
+        return await _context.Events
+            .AsNoTracking()
+            .Where(e => e.StartDate >= start)
+            .Where(e => e.EndDate <= end)
+            .Where(e => e.UserId == userId)
+            .ToListAsync();
+    }
 }

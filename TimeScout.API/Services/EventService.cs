@@ -39,6 +39,37 @@ public class EventService : IEventService
         return true;
     }
 
+    public async Task<IEnumerable<Event>> GetAllEventsAsync(string span, DateTime date, int userId)
+    {
+        var start = new DateOnly(date.Year, date.Month, date.Day);
+        var end = new DateOnly(date.Year, date.Month, date.Day);
+        switch (span)
+        {
+            case "day":
+                break;
+            case "week":
+                start = GetStartOfWeekDate(start);
+                end = GetEndOfWeekDate(end);
+                break;
+            case "biweek":
+                start = GetStartOfWeekDate(start.AddDays(-7));
+                end = GetEndOfWeekDate(end);
+                break;
+            case "month":
+                start = new DateOnly(start.Year, start.Month, 1);
+                end = start.AddMonths(1).AddDays(-1);
+                break;
+            case "year":
+                start = new DateOnly(start.Year, 1, 1);
+                end = new DateOnly(end.Year, 12, 31);
+                break;
+            default:
+                break;
+        }
+
+        return await _eventRepository.GetEventsByDateRangeAsync(start, end, userId);
+    }
+
     public Task<Event?> GetEventByIdAsync(int id, int userId)
     {
         return _eventRepository.GetEventByIdAsync(id, userId);
@@ -66,5 +97,19 @@ public class EventService : IEventService
         await _eventRepository.UpdateAsync(toUpdateEvent);
 
         return toUpdateEvent;
+    }
+
+    private DateOnly GetStartOfWeekDate(DateOnly date)
+    {
+        var diff = (7 + (date.DayOfWeek - DayOfWeek.Sunday)) % 7;
+
+        return date.AddDays(-1 * diff);
+    }
+
+    private DateOnly GetEndOfWeekDate(DateOnly date)
+    {
+        var diff = (7 + (date.DayOfWeek - DayOfWeek.Saturday)) % 7;
+
+        return date.AddDays(diff);
     }
 }

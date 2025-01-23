@@ -22,6 +22,11 @@ public class StartUp
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.Configure<RouteOptions>(options => {
+            options.LowercaseUrls = true;
+            options.LowercaseQueryStrings = true;
+        });
+
         services.AddControllers();
 
         // Add repository scoped
