@@ -97,7 +97,8 @@ namespace TimeScout.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                _logger.LogError(e, "Error saving event");
+                return BadRequest("Adding operation failed.");
             }
 
             return Ok("Event creation success.");
