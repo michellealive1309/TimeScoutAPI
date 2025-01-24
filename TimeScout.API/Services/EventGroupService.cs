@@ -36,4 +36,28 @@ public class EventGroupService : IEventGroupService
     {
         return _eventGroupRepository.GetEventGroupByIdAsync(id, userId);
     }
+
+    public async Task<EventGroup?> UpdateEventGroupAsync(EventGroup updateEventGroup, int userId)
+    {
+        var toUpdateEventGroup = await _eventGroupRepository.FindEventGroupWithMemberByIdAsync(updateEventGroup.Id);
+
+        if (
+            toUpdateEventGroup == null
+            || updateEventGroup.Members == null
+            || toUpdateEventGroup.Members == null
+            || !toUpdateEventGroup.Members.Any(m => m.Id == userId)
+        )
+        {
+            return null;
+        }
+
+        updateEventGroup.Members = [.. await _eventGroupRepository.GetMembersAsync(updateEventGroup.Members)];
+
+        toUpdateEventGroup.Name = updateEventGroup.Name;
+        toUpdateEventGroup.Members = updateEventGroup.Members;
+        
+        await _eventGroupRepository.UpdateAsync(toUpdateEventGroup);
+
+        return toUpdateEventGroup;
+    }
 }
