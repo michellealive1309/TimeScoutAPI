@@ -1,4 +1,5 @@
 using System;
+using TimeScout.API.DTOs.EventGroup;
 
 namespace TimeScout.API.DTOs.Event;
 
@@ -14,4 +15,5 @@ public class EventUpdateRequestDto
     public bool IsShared { get; set; } = false;
     public int? EventGroupId { get; set; } = null;
     public int UserId { get; set; }
+    public EventGroupUpdateRequestDto? EventGroup { get; set; }
 }
