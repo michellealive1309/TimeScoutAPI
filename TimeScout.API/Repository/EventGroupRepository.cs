@@ -13,7 +13,7 @@ public class EventGroupRepository : Repository<EventGroup>, IEventGroupRepositor
         _context = context;
     }
 
-    public async Task<IEnumerable<EventGroup>> GetAllEventGroup(int userId)
+    public async Task<IEnumerable<EventGroup>> GetAllEventGroupAsync(int userId)
     {
         return await _context.EventGroups
             .AsNoTracking()
@@ -22,7 +22,7 @@ public class EventGroupRepository : Repository<EventGroup>, IEventGroupRepositor
             .ToListAsync();
     }
 
-    public Task<EventGroup?> GetEventGroupById(int id, int userId)
+    public Task<EventGroup?> GetEventGroupByIdAsync(int id, int userId)
     {
         return _context.EventGroups
             .AsNoTracking()

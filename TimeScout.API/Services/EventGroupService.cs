@@ -15,11 +15,11 @@ public class EventGroupService : IEventGroupService
 
     public Task<IEnumerable<EventGroup>> GetAllEventGroupAsync(int userId)
     {
-        return _eventGroupRepository.GetAllEventGroup(userId);
+        return _eventGroupRepository.GetAllEventGroupAsync(userId);
     }
 
     public Task<EventGroup?> GetEventGroupByIdAsync(int id, int userId)
     {
-        return _eventGroupRepository.GetEventGroupById(id, userId);
+        return _eventGroupRepository.GetEventGroupByIdAsync(id, userId);
     }
 }

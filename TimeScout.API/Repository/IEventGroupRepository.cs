@@ -5,6 +5,6 @@ namespace TimeScout.API.Repository;
 
 public interface IEventGroupRepository : IRepository<EventGroup>
 {
-    Task<EventGroup?> GetEventGroupById(int id, int userId);
-    Task<IEnumerable<EventGroup>> GetAllEventGroup(int userId);
+    Task<EventGroup?> GetEventGroupByIdAsync(int id, int userId);
+    Task<IEnumerable<EventGroup>> GetAllEventGroupAsync(int userId);
 }
