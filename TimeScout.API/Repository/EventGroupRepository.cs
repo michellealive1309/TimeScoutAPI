@@ -16,6 +16,7 @@ public class EventGroupRepository : Repository<EventGroup>, IEventGroupRepositor
     public async Task<IEnumerable<EventGroup>> GetAllEventGroup(int userId)
     {
         return await _context.EventGroups
+            .AsNoTracking()
             .Where(eg => eg.Members!.Any(m => m.Id == userId))
             .Include(eg => eg.Members)
             .ToListAsync();
@@ -24,6 +25,7 @@ public class EventGroupRepository : Repository<EventGroup>, IEventGroupRepositor
     public Task<EventGroup?> GetEventGroupById(int id, int userId)
     {
         return _context.EventGroups
+            .AsNoTracking()
             .Where(eg => eg.Members!.Any(m => m.Id == userId))
             .Include(eg => eg.Members)
             .FirstOrDefaultAsync(eg => eg.Id == id);
