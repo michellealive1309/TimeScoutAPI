@@ -69,5 +69,25 @@ namespace TimeScout.API.Controllers
 
             return Ok(_mapper.Map<EventGroupResponseDto>(eventGroup));
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateEventGroupAsync([FromBody] EventGroupUpdateRequestDto eventGroupUpdateRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var updateEventGroup = _mapper.Map<EventGroup>(eventGroupUpdateRequest);
+            var updatedEventGroup = await _eventGroupService.UpdateEventGroupAsync(updateEventGroup, userId);
+
+            if (updatedEventGroup == null)
+            {
+                return BadRequest("Event group updating failed.");
+            }
+
+            return Ok(_mapper.Map<EventGroupResponseDto>(updatedEventGroup));
+        }
     }
 }
