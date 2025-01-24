@@ -32,6 +32,7 @@ public class StartUp
         // Add repository scoped
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<IEventGroupRepository, EventGroupRepository>();
 
         // Add service scoped
         services.AddScoped<IIdentityService, IdentityService>();
