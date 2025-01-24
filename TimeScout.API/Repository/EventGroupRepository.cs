@@ -31,4 +31,12 @@ public class EventGroupRepository : Repository<EventGroup>, IEventGroupRepositor
             .FirstOrDefaultAsync(eg => eg.Id == id);
     }
     
+    public async Task<IEnumerable<User>> GetMembersAsync(IEnumerable<User> members)
+    {
+        var memberIds = members.Select(m => m.Id);
+
+        return await _context.Users
+            .Where(u => memberIds.Contains(u.Id))
+            .ToListAsync();
+    }
 }
