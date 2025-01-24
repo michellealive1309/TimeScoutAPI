@@ -93,6 +93,11 @@ public class EventService : IEventService
         toUpdateEvent.IsShared = updateEvent.IsShared;
         toUpdateEvent.EventGroupId = updateEvent.EventGroupId;
         toUpdateEvent.UserId = updateEvent.UserId;
+        
+        if (updateEvent.EventGroup != null)
+        {
+            toUpdateEvent.EventGroup!.Name = updateEvent.EventGroup.Name;
+        }
 
         await _eventRepository.UpdateAsync(toUpdateEvent);
 

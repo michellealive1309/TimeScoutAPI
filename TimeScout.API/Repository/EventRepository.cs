@@ -17,6 +17,7 @@ public class EventRepository : Repository<Event>, IEventRepository
     {
         return _context.Events
             .Where(e => e.UserId == userId)
+            .Include(e => e.EventGroup)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
