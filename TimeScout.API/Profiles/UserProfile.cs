@@ -1,6 +1,7 @@
 using System;
 using AutoMapper;
 using TimeScout.API.DTOs.Authentication;
+using TimeScout.API.DTOs.EventGroup;
 using TimeScout.API.DTOs.User;
 using TimeScout.API.Models;
 
@@ -13,5 +14,6 @@ public class UserProfile : Profile
         CreateMap<RegisterRequestDto, User>();
         CreateMap<UserUpdateRequestDto, User>();
         CreateMap<User, UserResponseDto>();
+        CreateMap<MemberRequestDto, User>();
     }
 }
