@@ -13,6 +13,20 @@ public class EventGroupService : IEventGroupService
         _eventGroupRepository = eventGroupRepository;
     }
 
+    public async Task<bool> CreateEventGroupAsync(EventGroup eventGroup)
+    {
+        if (eventGroup.Members == null || eventGroup.Members.Count < 1)
+        {
+            return false;
+        }
+
+        eventGroup.Members = [.. await _eventGroupRepository.GetMembersAsync(eventGroup.Members)];
+
+        await _eventGroupRepository.AddAsync(eventGroup);
+
+        return true;
+    }
+
     public Task<IEnumerable<EventGroup>> GetAllEventGroupAsync(int userId)
     {
         return _eventGroupRepository.GetAllEventGroupAsync(userId);
