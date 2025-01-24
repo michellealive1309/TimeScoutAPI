@@ -2,7 +2,7 @@ using System;
 
 namespace TimeScout.API.DTOs.User;
 
-public class UserUpdateResponseDto
+public class UserResponseDto
 {
     public int Id { get; set; }
     public required string Username { get; set; }

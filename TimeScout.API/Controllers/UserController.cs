@@ -94,7 +94,7 @@ namespace TimeScout.API.Controllers
 
             var user = _mapper.Map<User>(userUpdateRequest);
             var updatedUser = await _userService.UpdateUserAsync(user);
-            var UserUpdateResponse = _mapper.Map<UserUpdateResponseDto>(updatedUser);
+            var UserUpdateResponse = _mapper.Map<UserResponseDto>(updatedUser);
 
             return Ok(UserUpdateResponse);
         }
