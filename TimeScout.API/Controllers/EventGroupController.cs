@@ -47,6 +47,25 @@ namespace TimeScout.API.Controllers
             return Ok("Event group creation succees.");
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEventGroupAsync(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var result = await _eventGroupService.DeleteEventGroupAsync(id, userId);
+
+            if (!result)
+            {
+                return BadRequest("Event group deletion failed.");
+            }
+
+            return Ok("Event group deletion succees.");
+        }
+
         [HttpGet("all")]
         public async Task<ActionResult<EventGroupResponseDto>> GetAllEventGroupAsync()
         {
