@@ -13,7 +13,7 @@ public class TimeScoutDbContext : DbContext
     }
 
     public DbSet<Event> Events { get; set; }
-    public DbSet<EventGroup> Groups { get; set; }
+    public DbSet<EventGroup> EventGroups { get; set; }
     public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
