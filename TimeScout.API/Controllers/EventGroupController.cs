@@ -28,6 +28,25 @@ namespace TimeScout.API.Controllers
             _logger = logger;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateEventGroupAsync([FromBody] EventGroupCreateRequestDto eventGroupCreateRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var newEventGroup = _mapper.Map<EventGroup>(eventGroupCreateRequest);
+            var result = await _eventGroupService.CreateEventGroupAsync(newEventGroup);
+
+            if (!result)
+            {
+                return BadRequest("Event group creation failed.");
+            }
+
+            return Ok("Event group creation succees.");
+        }
+
         [HttpGet("all")]
         public async Task<ActionResult<EventGroupResponseDto>> GetAllEventGroupAsync()
         {
