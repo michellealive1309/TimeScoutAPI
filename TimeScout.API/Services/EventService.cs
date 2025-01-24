@@ -94,9 +94,13 @@ public class EventService : IEventService
         toUpdateEvent.EventGroupId = updateEvent.EventGroupId;
         toUpdateEvent.UserId = updateEvent.UserId;
         
-        if (updateEvent.EventGroup != null)
+        if (toUpdateEvent.EventGroup == null && updateEvent.EventGroup != null)
         {
-            toUpdateEvent.EventGroup!.Name = updateEvent.EventGroup.Name;
+            toUpdateEvent.EventGroup = updateEvent.EventGroup;
+        }
+        else if (toUpdateEvent.EventGroup != null && updateEvent.EventGroup != null)
+        {
+            toUpdateEvent.EventGroup.Name = updateEvent.EventGroup.Name;
         }
 
         await _eventRepository.UpdateAsync(toUpdateEvent);
