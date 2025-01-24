@@ -28,6 +28,15 @@ namespace TimeScout.API.Controllers
             _logger = logger;
         }
 
+        [HttpGet("all")]
+        public async Task<ActionResult<EventGroupResponseDto>> GetAllEventGroupAsync()
+        {
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var eventGroups = await _eventGroupService.GetAllEventGroupAsync(userId);
+
+            return Ok(_mapper.Map<IEnumerable<EventGroupResponseDto>>(eventGroups));
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<EventGroupResponseDto>> GetEventGroupByIdAsync(int id)
         {
@@ -40,15 +49,6 @@ namespace TimeScout.API.Controllers
             }
 
             return Ok(_mapper.Map<EventGroupResponseDto>(eventGroup));
-        }
-
-        [HttpGet("all")]
-        public async Task<ActionResult<EventGroupResponseDto>> GetAllEventGroupByIdAsync()
-        {
-            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var eventGroups = await _eventGroupService.GetAllEventGroupAsync(userId);
-
-            return Ok(_mapper.Map<IEnumerable<EventGroupResponseDto>>(eventGroups));
         }
     }
 }
