@@ -11,5 +11,7 @@ public class EventGroupProfile : Profile
         CreateMap<EventGroup, EventGroupResponseDto>();
 
         CreateMap<EventGroupCreateRequestDto, EventGroup>();
+
+        CreateMap<EventGroupUpdateRequestDto, EventGroup>();
     }
 }
