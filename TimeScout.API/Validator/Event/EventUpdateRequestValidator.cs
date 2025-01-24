@@ -58,5 +58,7 @@ public class EventUpdateRequestValidator : AbstractValidator<EventUpdateRequestD
         RuleFor(x => x.EventGroupId).GreaterThan(0).WithMessage("EventGroupId should not be 0.");
 
         RuleFor(x => x.UserId).NotEmpty().WithMessage("UserId should not be empty.");
+
+        RuleFor(x => x.EventGroup).SetValidator(new EventGroupUpdateRequestValidator());
     }
 }
