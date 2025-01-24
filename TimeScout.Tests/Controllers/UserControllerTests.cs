@@ -311,7 +311,7 @@ namespace TimeScout.Tests.Controllers
             var autoMapperMock = new Mock<IMapper>();
 
             autoMapperMock.Setup(x => x.Map<User>(It.IsAny<UserUpdateRequestDto>())).Returns(user);
-            autoMapperMock.Setup(x => x.Map<UserUpdateResponseDto>(It.IsAny<User>())).Returns(It.IsAny<UserUpdateResponseDto>());
+            autoMapperMock.Setup(x => x.Map<UserResponseDto>(It.IsAny<User>())).Returns(It.IsAny<UserResponseDto>());
 
             var loggerMock = new Mock<ILogger<UserController>>();
             var userController = new UserController(
