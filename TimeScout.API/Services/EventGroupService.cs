@@ -27,6 +27,20 @@ public class EventGroupService : IEventGroupService
         return true;
     }
 
+    public async Task<bool> DeleteEventGroupAsync(int id, int userId)
+    {
+        var eventGroup = await _eventGroupRepository.FindEventGroupWithMemberByIdAsync(id);
+        
+        if (eventGroup == null)
+        {
+            return false;
+        }
+
+        await _eventGroupRepository.RemoveAsync(eventGroup);
+
+        return true;
+    }
+
     public Task<IEnumerable<EventGroup>> GetAllEventGroupAsync(int userId)
     {
         return _eventGroupRepository.GetAllEventGroupAsync(userId);
