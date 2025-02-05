@@ -1,4 +1,3 @@
-using System;
 using TimeScout.API.Models;
 using TimeScout.API.Repository;
 
