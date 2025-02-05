@@ -14,6 +14,7 @@ public class EventResponseDto
     public TimeSpan Duration { get; set; }
     public bool IsShared { get; set; }
     public int? EventGroupId { get; set; }
+    public int? TagId { get; set; }
     public int UserId { get; set; }
     public DateTime Created { get; set; }
     public DateTime Modified { get; set; }
