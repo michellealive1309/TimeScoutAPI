@@ -21,6 +21,10 @@ public class EventModelConfiguration : IEntityTypeConfiguration<Event>
                .WithMany(eg => eg.Events)
                .HasForeignKey(e => e.EventGroupId)
                .IsRequired(false);
+        builder.HasOne(e => e.Tag)
+               .WithMany()
+               .HasForeignKey(e => e.TagId)
+               .IsRequired(false);
         builder.HasOne(e => e.User)
                .WithMany()
                .HasForeignKey(e => e.UserId);

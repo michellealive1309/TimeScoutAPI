@@ -1,4 +1,3 @@
-using System;
 using TimeScout.API.Models;
 using Microsoft.EntityFrameworkCore;
 using TimeScout.API.DataAccess.ModelConfigurations;
@@ -15,6 +14,7 @@ public class TimeScoutDbContext : DbContext
     public DbSet<Event> Events { get; set; }
     public DbSet<EventGroup> EventGroups { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Tag> Tags { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
