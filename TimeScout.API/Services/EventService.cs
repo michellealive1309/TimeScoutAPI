@@ -92,6 +92,7 @@ public class EventService : IEventService
         toUpdateEvent.EndTime = updateEvent.EndTime;
         toUpdateEvent.IsShared = updateEvent.IsShared;
         toUpdateEvent.EventGroupId = updateEvent.EventGroupId;
+        toUpdateEvent.TagId = updateEvent.TagId;
         toUpdateEvent.UserId = updateEvent.UserId;
 
         await _eventRepository.UpdateAsync(toUpdateEvent);
