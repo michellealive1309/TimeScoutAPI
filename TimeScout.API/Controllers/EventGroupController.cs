@@ -50,11 +50,6 @@ namespace TimeScout.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEventGroupAsync(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var result = await _eventGroupService.DeleteEventGroupAsync(id, userId);
 
@@ -90,7 +85,7 @@ namespace TimeScout.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateEventGroupAsync([FromBody] EventGroupUpdateRequestDto eventGroupUpdateRequest)
+        public async Task<ActionResult<EventGroupResponseDto>> UpdateEventGroupAsync([FromBody] EventGroupUpdateRequestDto eventGroupUpdateRequest)
         {
             if (!ModelState.IsValid)
             {
