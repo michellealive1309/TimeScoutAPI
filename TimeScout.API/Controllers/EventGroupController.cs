@@ -28,6 +28,39 @@ namespace TimeScout.API.Controllers
             _logger = logger;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateEventGroupAsync([FromBody] EventGroupCreateRequestDto eventGroupCreateRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var newEventGroup = _mapper.Map<EventGroup>(eventGroupCreateRequest);
+            var result = await _eventGroupService.CreateEventGroupAsync(newEventGroup);
+
+            if (!result)
+            {
+                return BadRequest("Event group creation failed.");
+            }
+
+            return Ok("Event group creation succees.");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEventGroupAsync(int id)
+        {
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var result = await _eventGroupService.DeleteEventGroupAsync(id, userId);
+
+            if (!result)
+            {
+                return BadRequest("Event group deletion failed.");
+            }
+
+            return Ok("Event group deletion succees.");
+        }
+
         [HttpGet("all")]
         public async Task<ActionResult<EventGroupResponseDto>> GetAllEventGroupAsync()
         {
@@ -49,6 +82,26 @@ namespace TimeScout.API.Controllers
             }
 
             return Ok(_mapper.Map<EventGroupResponseDto>(eventGroup));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<EventGroupResponseDto>> UpdateEventGroupAsync([FromBody] EventGroupUpdateRequestDto eventGroupUpdateRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var updateEventGroup = _mapper.Map<EventGroup>(eventGroupUpdateRequest);
+            var updatedEventGroup = await _eventGroupService.UpdateEventGroupAsync(updateEventGroup, userId);
+
+            if (updatedEventGroup == null)
+            {
+                return BadRequest("Event group updating failed.");
+            }
+
+            return Ok(_mapper.Map<EventGroupResponseDto>(updatedEventGroup));
         }
     }
 }

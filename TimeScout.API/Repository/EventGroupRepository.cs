@@ -13,6 +13,13 @@ public class EventGroupRepository : Repository<EventGroup>, IEventGroupRepositor
         _context = context;
     }
 
+    public Task<EventGroup?> FindEventGroupWithMemberByIdAsync(int id)
+    {
+        return _context.EventGroups
+            .Include(eg => eg.Members)
+            .FirstOrDefaultAsync(eg => eg.Id == id);
+    }
+
     public async Task<IEnumerable<EventGroup>> GetAllEventGroupAsync(int userId)
     {
         return await _context.EventGroups
@@ -30,5 +37,13 @@ public class EventGroupRepository : Repository<EventGroup>, IEventGroupRepositor
             .Include(eg => eg.Members)
             .FirstOrDefaultAsync(eg => eg.Id == id);
     }
-    
+
+    public async Task<IEnumerable<User>> GetMembersAsync(IEnumerable<User> members)
+    {
+        var memberIds = members.Select(m => m.Id);
+
+        return await _context.Users
+            .Where(u => memberIds.Contains(u.Id))
+            .ToListAsync();
+    }
 }
