@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TimeScout.API.DataAccess;
@@ -11,9 +12,11 @@ using TimeScout.API.DataAccess;
 namespace TimeScout.API.DataAccess.Migrations
 {
     [DbContext(typeof(TimeScoutDbContext))]
-    partial class TimeScoutDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250205070524_AddTagEntityAndItsRelationship")]
+    partial class AddTagEntityAndItsRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,26 +166,10 @@ namespace TimeScout.API.DataAccess.Migrations
                         .HasColumnType("text")
                         .HasColumnName("color");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
-                    b.Property<DateTime>("Modified")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("modified");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
                         .HasName("pk_tags");

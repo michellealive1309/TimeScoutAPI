@@ -18,6 +18,7 @@ public class EventRepository : Repository<Event>, IEventRepository
         return _context.Events
             .Where(e => e.UserId == userId)
             .Include(e => e.EventGroup)
+            .Include(e => e.Tag)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
@@ -28,6 +29,8 @@ public class EventRepository : Repository<Event>, IEventRepository
             .Where(e => e.StartDate >= start)
             .Where(e => e.EndDate <= end)
             .Where(e => e.UserId == userId)
+            .Include(e => e.EventGroup)
+            .Include(e => e.Tag)
             .ToListAsync();
     }
 }
