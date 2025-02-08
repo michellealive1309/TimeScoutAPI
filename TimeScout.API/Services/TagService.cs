@@ -52,7 +52,7 @@ public class TagService : ITagService
     {
         var toUpdateTag = await _tagRepository.FindAsync(updateTag.Id); 
 
-        if (toUpdateTag == null || toUpdateTag.UserId != updateTag.Id)
+        if (toUpdateTag == null || toUpdateTag.UserId != updateTag.UserId)
         {
             return null;
         }
