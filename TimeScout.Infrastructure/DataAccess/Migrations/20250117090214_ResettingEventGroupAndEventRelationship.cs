@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace TimeScout.API.DataAccess.Migrations
+namespace TimeScout.Infrastructure.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class SetEventAndEventGroupRelationshipOptional : Migration
+    public partial class ResettingEventGroupAndEventRelationship : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace TimeScout.API.DataAccess.Migrations
                 table: "events");
 
             migrationBuilder.AddForeignKey(
-                name: "fk_events_event_groups_event_group_id",
+                name: "fk_events_groups_event_group_id",
                 table: "events",
                 column: "event_group_id",
                 principalTable: "event_groups",
@@ -26,7 +26,7 @@ namespace TimeScout.API.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "fk_events_event_groups_event_group_id",
+                name: "fk_events_groups_event_group_id",
                 table: "events");
 
             migrationBuilder.AddForeignKey(
@@ -34,8 +34,7 @@ namespace TimeScout.API.DataAccess.Migrations
                 table: "events",
                 column: "event_group_id",
                 principalTable: "event_groups",
-                principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "id");
         }
     }
 }

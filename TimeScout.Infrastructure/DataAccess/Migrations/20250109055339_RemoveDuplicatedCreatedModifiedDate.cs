@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace TimeScout.API.DataAccess.Migrations
+namespace TimeScout.Infrastructure.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class RemoveDuplicatedCreatedModifiedDate : Migration

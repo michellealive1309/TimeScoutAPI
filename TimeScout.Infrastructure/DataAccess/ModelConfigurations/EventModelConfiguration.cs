@@ -1,9 +1,8 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TimeScout.API.Models;
+using TimeScout.Domain.Entities;
 
-namespace TimeScout.API.DataAccess.ModelConfigurations;
+namespace TimeScout.Infrastructure.DataAccess.ModelConfigurations;
 
 public class EventModelConfiguration : IEntityTypeConfiguration<Event>
 {

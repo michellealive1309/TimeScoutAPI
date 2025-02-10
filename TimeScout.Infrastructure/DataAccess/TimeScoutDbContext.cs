@@ -1,9 +1,8 @@
-using TimeScout.API.Models;
+using TimeScout.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using TimeScout.API.DataAccess.ModelConfigurations;
-using TimeScout.API.Entity;
+using TimeScout.Infrastructure.DataAccess.ModelConfigurations;
 
-namespace TimeScout.API.DataAccess;
+namespace TimeScout.Infrastructure.DataAccess;
 
 public class TimeScoutDbContext : DbContext
 {

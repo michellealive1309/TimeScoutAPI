@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using TimeScout.API.DataAccess;
+using TimeScout.Infrastructure.DataAccess;
 
 #nullable disable
 
-namespace TimeScout.API.DataAccess.Migrations
+namespace TimeScout.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(TimeScoutDbContext))]
-    partial class TimeScoutDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250109055339_RemoveDuplicatedCreatedModifiedDate")]
+    partial class RemoveDuplicatedCreatedModifiedDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,26 @@ namespace TimeScout.API.DataAccess.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TimeScout.API.Models.Event", b =>
+            modelBuilder.Entity("EventGroupUser", b =>
+                {
+                    b.Property<int>("EventGroupsId")
+                        .HasColumnType("integer")
+                        .HasColumnName("event_groups_id");
+
+                    b.Property<int>("MembersId")
+                        .HasColumnType("integer")
+                        .HasColumnName("members_id");
+
+                    b.HasKey("EventGroupsId", "MembersId")
+                        .HasName("pk_event_group_user");
+
+                    b.HasIndex("MembersId")
+                        .HasDatabaseName("ix_event_group_user_members_id");
+
+                    b.ToTable("event_group_user", (string)null);
+                });
+
+            modelBuilder.Entity("TimeScout.Domain.Entities.Event", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,13 +69,9 @@ namespace TimeScout.API.DataAccess.Migrations
                         .HasColumnType("time without time zone")
                         .HasColumnName("end_time");
 
-                    b.Property<int?>("EventGroupId")
+                    b.Property<int>("EventGroupId")
                         .HasColumnType("integer")
                         .HasColumnName("event_group_id");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
 
                     b.Property<bool>("IsShared")
                         .HasColumnType("boolean")
@@ -76,10 +94,6 @@ namespace TimeScout.API.DataAccess.Migrations
                         .HasColumnType("time without time zone")
                         .HasColumnName("start_time");
 
-                    b.Property<int?>("TagId")
-                        .HasColumnType("integer")
-                        .HasColumnName("tag_id");
-
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
                         .HasColumnName("user_id");
@@ -90,16 +104,13 @@ namespace TimeScout.API.DataAccess.Migrations
                     b.HasIndex("EventGroupId")
                         .HasDatabaseName("ix_events_event_group_id");
 
-                    b.HasIndex("TagId")
-                        .HasDatabaseName("ix_events_tag_id");
-
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_events_user_id");
 
                     b.ToTable("events", (string)null);
                 });
 
-            modelBuilder.Entity("TimeScout.API.Models.EventGroup", b =>
+            modelBuilder.Entity("TimeScout.Domain.Entities.EventGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,18 +118,6 @@ namespace TimeScout.API.DataAccess.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
-                    b.Property<DateTime>("Modified")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("modified");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -131,7 +130,7 @@ namespace TimeScout.API.DataAccess.Migrations
                     b.ToTable("event_groups", (string)null);
                 });
 
-            modelBuilder.Entity("TimeScout.API.Models.EventGroupMember", b =>
+            modelBuilder.Entity("TimeScout.Domain.Entities.EventGroupMember", b =>
                 {
                     b.Property<int>("EventGroupId")
                         .HasColumnType("integer")
@@ -150,47 +149,7 @@ namespace TimeScout.API.DataAccess.Migrations
                     b.ToTable("event_group_members", (string)null);
                 });
 
-            modelBuilder.Entity("TimeScout.API.Models.Tag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Color")
-                        .HasColumnType("text")
-                        .HasColumnName("color");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
-                    b.Property<DateTime>("Modified")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("modified");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_tags");
-
-                    b.ToTable("tags", (string)null);
-                });
-
-            modelBuilder.Entity("TimeScout.API.Models.User", b =>
+            modelBuilder.Entity("TimeScout.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -212,10 +171,6 @@ namespace TimeScout.API.DataAccess.Migrations
                         .HasColumnType("text")
                         .HasColumnName("first_name");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
                     b.Property<string>("LastName")
                         .HasColumnType("text")
                         .HasColumnName("last_name");
@@ -228,10 +183,6 @@ namespace TimeScout.API.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("password");
-
-                    b.Property<DateTime?>("RecoveryEndDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("recovery_end_date");
 
                     b.Property<string>("RefreshToken")
                         .HasColumnType("text")
@@ -257,19 +208,33 @@ namespace TimeScout.API.DataAccess.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("TimeScout.API.Models.Event", b =>
+            modelBuilder.Entity("EventGroupUser", b =>
                 {
-                    b.HasOne("TimeScout.API.Models.EventGroup", "EventGroup")
+                    b.HasOne("TimeScout.Domain.Entities.EventGroup", null)
+                        .WithMany()
+                        .HasForeignKey("EventGroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_event_group_user_groups_event_groups_id");
+
+                    b.HasOne("TimeScout.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("MembersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_event_group_user_users_members_id");
+                });
+
+            modelBuilder.Entity("TimeScout.Domain.Entities.Event", b =>
+                {
+                    b.HasOne("TimeScout.Domain.Entities.EventGroup", "EventGroup")
                         .WithMany("Events")
                         .HasForeignKey("EventGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_events_event_groups_event_group_id");
 
-                    b.HasOne("TimeScout.API.Models.Tag", "Tag")
-                        .WithMany()
-                        .HasForeignKey("TagId")
-                        .HasConstraintName("fk_events_tags_tag_id");
-
-                    b.HasOne("TimeScout.API.Models.User", "User")
+                    b.HasOne("TimeScout.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -278,21 +243,19 @@ namespace TimeScout.API.DataAccess.Migrations
 
                     b.Navigation("EventGroup");
 
-                    b.Navigation("Tag");
-
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TimeScout.API.Models.EventGroupMember", b =>
+            modelBuilder.Entity("TimeScout.Domain.Entities.EventGroupMember", b =>
                 {
-                    b.HasOne("TimeScout.API.Models.EventGroup", "EventGroup")
+                    b.HasOne("TimeScout.Domain.Entities.EventGroup", "EventGroup")
                         .WithMany()
                         .HasForeignKey("EventGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_event_group_members_event_groups_event_group_id");
 
-                    b.HasOne("TimeScout.API.Models.User", "User")
+                    b.HasOne("TimeScout.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,7 +267,7 @@ namespace TimeScout.API.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TimeScout.API.Models.EventGroup", b =>
+            modelBuilder.Entity("TimeScout.Domain.Entities.EventGroup", b =>
                 {
                     b.Navigation("Events");
                 });

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace TimeScout.API.DataAccess.Migrations
+namespace TimeScout.Infrastructure.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class RemoveUserRelationWithEventGroup : Migration
