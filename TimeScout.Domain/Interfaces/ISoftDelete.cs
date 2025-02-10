@@ -1,6 +1,4 @@
-using System;
-
-namespace TimeScout.API.Entity;
+namespace TimeScout.Domain.Interfaces;
 
 public interface ISoftDelete
 {
