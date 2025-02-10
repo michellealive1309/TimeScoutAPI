@@ -5,9 +5,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using TimeScout.API.DataAccess;
-using TimeScout.API.Repository;
-using TimeScout.API.Services;
+using TimeScout.Application.Services;
+using TimeScout.Application.Interfaces;
+using TimeScout.Domain.Interfaces;
+using TimeScout.Infrastructure.DataAccess;
+using TimeScout.Infrastructure.Repository;
+using TimeScout.Application.Settings;
+using TimeScout.Application.Profiles;
 
 namespace TimeScout.API;
 
@@ -26,6 +30,7 @@ public class StartUp
             options.LowercaseUrls = true;
             options.LowercaseQueryStrings = true;
         });
+        services.Configure<JwtSetting>(Configuration.GetSection("Jwt"));
 
         services.AddControllers();
 
@@ -89,7 +94,12 @@ public class StartUp
 
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<StartUp>();
-        services.AddAutoMapper(typeof(StartUp));
+        services.AddAutoMapper(cfg => {
+            cfg.AddProfile<EventGroupProfile>();
+            cfg.AddProfile<EventProfile>();
+            cfg.AddProfile<TagProfile>();
+            cfg.AddProfile<UserProfile>();
+        });
 
         // Configure Database
         services.AddDbContext<TimeScoutDbContext>(options =>
