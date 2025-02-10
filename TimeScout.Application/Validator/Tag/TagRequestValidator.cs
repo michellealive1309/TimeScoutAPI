@@ -1,7 +1,7 @@
 using FluentValidation;
-using TimeScout.API.DTOs.Event;
+using TimeScout.Application.DTOs.Tag;
 
-namespace TimeScout.API.Validator.Event;
+namespace TimeScout.Application.Validator.Tag;
 
 public class TagRequestValidator : AbstractValidator<TagRequestDto>
 {

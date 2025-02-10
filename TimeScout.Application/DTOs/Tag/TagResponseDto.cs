@@ -1,8 +1,8 @@
-namespace TimeScout.API.DTOs.Event;
+namespace TimeScout.Application.DTOs.Tag;
 
-public class TagRequestDto
+public class TagResponseDto
 {
-    public int? Id { get; set; }
+    public int Id { get; set; }
     public string? Name { get; set; }
     public string? Color { get; set; }
     public int UserId { get; set; }

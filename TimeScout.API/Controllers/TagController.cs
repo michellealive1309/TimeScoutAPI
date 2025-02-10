@@ -3,9 +3,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TimeScout.API.DTOs.Event;
-using TimeScout.API.Models;
-using TimeScout.API.Services;
+using TimeScout.Application.DTOs.Tag;
+using TimeScout.Domain.Entities;
+using TimeScout.Application.Interfaces;
 
 namespace TimeScout.API.Controllers
 {
