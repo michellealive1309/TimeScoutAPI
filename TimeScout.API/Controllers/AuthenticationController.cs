@@ -8,6 +8,7 @@ using TimeScout.Application.Interfaces;
 using TimeScout.Application.Security;
 using Microsoft.Extensions.Options;
 using TimeScout.Application.Settings;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace TimeScout.API.Controllers
 {
@@ -35,6 +36,7 @@ namespace TimeScout.API.Controllers
         }
 
         [HttpPost("login")]
+        [EnableRateLimiting("LoginPolicy")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequest)
         {
             var user = await _identityService.AuthenticateAsync(loginRequest.Email, loginRequest.Password);
@@ -64,6 +66,7 @@ namespace TimeScout.API.Controllers
         }
 
         [HttpPost("refresh")]
+        [EnableRateLimiting("RefreshTokenPolicy")]
         public async Task<IActionResult> Refresh()
         {
             var refreshToken = Request.Cookies["refreshToken"];
@@ -98,6 +101,7 @@ namespace TimeScout.API.Controllers
         }
 
         [HttpPost("register")]
+        [EnableRateLimiting("RegisterPolicy")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequest)
         {
             if (!ModelState.IsValid)

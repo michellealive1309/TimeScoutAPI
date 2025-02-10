@@ -12,6 +12,8 @@ using TimeScout.Infrastructure.DataAccess;
 using TimeScout.Infrastructure.Repository;
 using TimeScout.Application.Settings;
 using TimeScout.Application.Profiles;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 
 namespace TimeScout.API;
 
@@ -73,6 +75,27 @@ public class StartUp
             });
         });
 
+        services.AddRateLimiter(options => {
+            options.AddSlidingWindowLimiter("LoginPolicy", opt => {
+                opt.Window = TimeSpan.FromMinutes(1);
+                opt.PermitLimit = 5;
+                opt.SegmentsPerWindow = 3;
+                opt.QueueLimit = 0;
+
+            });
+            options.AddFixedWindowLimiter("RegisterPolicy", opt => {
+                opt.Window = TimeSpan.FromHours(1);
+                opt.PermitLimit = 3;
+                opt.QueueLimit = 0;
+            });
+            options.AddFixedWindowLimiter("RefreshTokenPolicy", opt => {
+                opt.Window = TimeSpan.FromHours(1);
+                opt.PermitLimit = 10;
+                opt.QueueLimit = 0;
+            });
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        });
+
         // Add Authentication
         services.AddAuthentication(options => {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -119,6 +142,8 @@ public class StartUp
 
         app.UseHttpsRedirection();
         app.UseRouting();
+
+        app.UseRateLimiter();
 
         app.UseAuthentication();
         app.UseAuthorization();
