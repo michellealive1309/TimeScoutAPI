@@ -1,6 +1,6 @@
 using System;
 
-namespace TimeScout.API.DTOs.EventGroup;
+namespace TimeScout.Application.DTOs.EventGroup;
 
 public class EventGroupUpdateRequestDto
 {
