@@ -1,7 +1,7 @@
 using FluentValidation;
-using TimeScout.API.DTOs.Event;
+using TimeScout.Application.DTOs.Event;
 
-namespace TimeScout.API.Validator.Event;
+namespace TimeScout.Application.Validator.Event;
 
 public class EventCreateRequestValidator : AbstractValidator<EventCreateRequestDto>
 {
