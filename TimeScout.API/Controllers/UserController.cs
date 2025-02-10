@@ -2,9 +2,9 @@ using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TimeScout.API.DTOs.User;
-using TimeScout.API.Models;
-using TimeScout.API.Services;
+using TimeScout.Application.DTOs.User;
+using TimeScout.Domain.Entities;
+using TimeScout.Application.Interfaces;
 
 namespace TimeScout.API.Controllers
 {
@@ -66,6 +66,8 @@ namespace TimeScout.API.Controllers
             {
                 return BadRequest("User logout failed");
             }
+
+            Response.Cookies.Delete("refresh_token");
 
             return Ok("User logged out successfully");
         }
