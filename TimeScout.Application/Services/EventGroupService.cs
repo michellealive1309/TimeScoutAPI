@@ -1,7 +1,8 @@
-using TimeScout.API.Models;
-using TimeScout.API.Repository;
+using TimeScout.Domain.Entities;
+using TimeScout.Domain.Interfaces;
+using TimeScout.Application.Interfaces;
 
-namespace TimeScout.API.Services;
+namespace TimeScout.Application.Services;
 
 public class EventGroupService : IEventGroupService
 {
