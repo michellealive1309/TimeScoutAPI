@@ -1,7 +1,7 @@
 using FluentValidation;
-using TimeScout.API.DTOs.User;
+using TimeScout.Application.DTOs.User;
 
-namespace TimeScout.API.Validator.User;
+namespace TimeScout.Application.Validator.User;
 
 public class UserUpdateRequestValidator : AbstractValidator<UserUpdateRequestDto>
 {

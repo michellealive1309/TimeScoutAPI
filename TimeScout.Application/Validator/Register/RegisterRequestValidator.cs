@@ -1,7 +1,7 @@
 using FluentValidation;
-using TimeScout.API.DTOs.Authentication;
+using TimeScout.Application.DTOs.Authentication;
 
-namespace TimeScout.API.Validator.Register;
+namespace TimeScout.Application.Validator.Register;
 
 public class RegisterRequestValidator : AbstractValidator<RegisterRequestDto>
 {

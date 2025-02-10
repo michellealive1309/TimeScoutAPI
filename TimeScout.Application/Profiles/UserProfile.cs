@@ -1,11 +1,10 @@
-using System;
 using AutoMapper;
-using TimeScout.API.DTOs.Authentication;
-using TimeScout.API.DTOs.EventGroup;
-using TimeScout.API.DTOs.User;
-using TimeScout.API.Models;
+using TimeScout.Application.DTOs.Authentication;
+using TimeScout.Application.DTOs.EventGroup;
+using TimeScout.Application.DTOs.User;
+using TimeScout.Domain.Entities;
 
-namespace TimeScout.API.Profiles;
+namespace TimeScout.Application.Profiles;
 
 public class UserProfile : Profile
 {
