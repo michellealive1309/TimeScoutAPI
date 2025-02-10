@@ -1,9 +1,9 @@
 
 using Microsoft.Extensions.Configuration;
 using Moq;
-using TimeScout.API.Models;
-using TimeScout.API.Repository;
-using TimeScout.API.Services;
+using TimeScout.Domain.Entities;
+using TimeScout.Infrastructure.Repository;
+using TimeScout.Application.Services;
 
 namespace TimeScout.Tests.Services
 {

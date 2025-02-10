@@ -1,13 +1,11 @@
 using System.Security.Claims;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using TimeScout.API.DTOs.Event;
-using TimeScout.API.Models;
-using TimeScout.API.Services;
+using TimeScout.Application.DTOs.Event;
+using TimeScout.Domain.Entities;
+using TimeScout.Application.Interfaces;
 
 namespace TimeScout.API.Controllers
 {
