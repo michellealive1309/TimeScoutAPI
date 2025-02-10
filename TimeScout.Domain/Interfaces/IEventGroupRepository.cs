@@ -1,7 +1,6 @@
-using System;
-using TimeScout.API.Models;
+using TimeScout.Domain.Entities;
 
-namespace TimeScout.API.Repository;
+namespace TimeScout.Domain.Interfaces;
 
 public interface IEventGroupRepository : IRepository<EventGroup>
 {

@@ -1,6 +1,6 @@
-using TimeScout.API.Entity;
+using TimeScout.Domain.Entities;
 
-namespace TimeScout.API.Repository;
+namespace TimeScout.Domain.Interfaces;
 
 public interface IRepository<TEntity>
 where TEntity : BaseEntity

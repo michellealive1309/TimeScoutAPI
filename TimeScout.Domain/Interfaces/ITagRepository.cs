@@ -1,6 +1,6 @@
-using TimeScout.API.Models;
+using TimeScout.Domain.Entities;
 
-namespace TimeScout.API.Repository;
+namespace TimeScout.Domain.Interfaces;
 
 public interface ITagRepository : IRepository<Tag>
 {
