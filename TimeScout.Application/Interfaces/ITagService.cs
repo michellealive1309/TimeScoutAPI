@@ -1,6 +1,6 @@
-using TimeScout.API.Models;
+using TimeScout.Domain.Entities;
 
-namespace TimeScout.API.Services;
+namespace TimeScout.Application.Interfaces;
 
 public interface ITagService
 {
