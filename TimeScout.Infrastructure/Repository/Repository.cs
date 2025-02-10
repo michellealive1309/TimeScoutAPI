@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using TimeScout.API.Entity;
+using TimeScout.Domain.Entities;
+using TimeScout.Domain.Interfaces;
 
-namespace TimeScout.API.Repository;
+namespace TimeScout.Infrastructure.Repository;
 
 public class Repository<TEntity> : IRepository<TEntity>
 where TEntity : BaseEntity
