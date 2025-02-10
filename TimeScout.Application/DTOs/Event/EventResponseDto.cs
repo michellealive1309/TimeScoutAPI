@@ -1,6 +1,6 @@
 using System;
 
-namespace TimeScout.API.DTOs.Event;
+namespace TimeScout.Application.DTOs.Event;
 
 public class EventResponseDto
 {

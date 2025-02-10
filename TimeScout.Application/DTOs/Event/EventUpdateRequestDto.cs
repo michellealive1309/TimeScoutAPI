@@ -1,9 +1,11 @@
-using TimeScout.API.DTOs.EventGroup;
+using System;
+using TimeScout.Application.DTOs.EventGroup;
 
-namespace TimeScout.API.DTOs.Event;
+namespace TimeScout.Application.DTOs.Event;
 
-public class EventCreateRequestDto
+public class EventUpdateRequestDto
 {
+    public int Id { get; set; }
     public required string Name { get; set; }
     public string? Detail { get; set; }
     public string? StartDate { get; set; }
