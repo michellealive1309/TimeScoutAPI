@@ -1,6 +1,6 @@
 using System;
 
-namespace TimeScout.API.Models;
+namespace TimeScout.Domain.Entities;
 
 public class EventGroupMember
 {

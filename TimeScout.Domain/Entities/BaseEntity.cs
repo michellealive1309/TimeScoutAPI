@@ -1,6 +1,6 @@
-using System;
+using TimeScout.Domain.Interfaces;
 
-namespace TimeScout.API.Entity;
+namespace TimeScout.Domain.Entities;
 
 public abstract class BaseEntity : ISoftDelete
 {

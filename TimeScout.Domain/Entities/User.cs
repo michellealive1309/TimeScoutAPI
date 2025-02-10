@@ -1,7 +1,4 @@
-using System;
-using TimeScout.API.Entity;
-
-namespace TimeScout.API.Models;
+namespace TimeScout.Domain.Entities;
 
 public class User : BaseEntity
 {
