@@ -1,6 +1,4 @@
-using System;
-
-namespace TimeScout.API.DTOs.Authentication;
+namespace TimeScout.Application.DTOs.Authentication;
 
 public class RefreshRequestDto
 {

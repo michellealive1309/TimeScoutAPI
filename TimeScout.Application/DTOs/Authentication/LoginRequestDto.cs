@@ -1,6 +1,4 @@
-using System;
-
-namespace TimeScout.API.DTOs.Login;
+namespace TimeScout.Application.DTOs.Login;
 
 public class LoginRequestDto
 {

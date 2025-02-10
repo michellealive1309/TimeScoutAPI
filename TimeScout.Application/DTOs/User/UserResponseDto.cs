@@ -1,6 +1,6 @@
 using System;
 
-namespace TimeScout.API.DTOs.User;
+namespace TimeScout.Application.DTOs.User;
 
 public class UserResponseDto
 {
