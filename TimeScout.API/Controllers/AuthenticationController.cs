@@ -1,10 +1,13 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TimeScout.API.DTOs.Authentication;
-using TimeScout.API.DTOs.Login;
-using TimeScout.API.Models;
-using TimeScout.API.Services;
+using TimeScout.Application.DTOs.Authentication;
+using TimeScout.Application.DTOs.Login;
+using TimeScout.Domain.Entities;
+using TimeScout.Application.Interfaces;
+using TimeScout.Application.Security;
+using Microsoft.Extensions.Options;
+using TimeScout.Application.Settings;
 
 namespace TimeScout.API.Controllers
 {
@@ -16,16 +19,19 @@ namespace TimeScout.API.Controllers
         private readonly IIdentityService _identityService;
         private readonly IMapper _mapper;
         private readonly ILogger<AuthenticationController> _logger;
+        private readonly JwtSetting _jwtSetting;
 
         public AuthenticationController(
             IIdentityService identityService,
             IMapper mapper,
-            ILogger<AuthenticationController> logger
+            ILogger<AuthenticationController> logger,
+            IOptions<JwtSetting> options
         )
         {
             _identityService = identityService;
             _mapper = mapper;
             _logger = logger;
+            _jwtSetting = options.Value;
         }
 
         [HttpPost("login")]
@@ -38,40 +44,55 @@ namespace TimeScout.API.Controllers
                 return Unauthorized();
             }
 
-            var accessToken = _identityService.GenerateJSONWebToken(user.Email, user.Id.ToString(), user.Role);
-            var refreshToken = _identityService.GenerateRefreshToken();
+            var refreshToken = JwtHelper.GenerateRefreshToken();
             var LoginResponseDto = new LoginResponseDto
             {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
+                AccessToken = JwtHelper.GenerateJSONWebToken(_jwtSetting, user.Email, user.Id.ToString(), user.Role),
                 UserId = user.Id
             };
 
             await _identityService.UpdateRefreshTokenAsync(user.Id, refreshToken);
+
+            Response.Cookies.Append("refresh_token", refreshToken, new CookieOptions {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(7)
+            });
 
             return Ok(LoginResponseDto);
         }
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> Refresh([FromBody] RefreshRequestDto refreshRequest)
+        public async Task<IActionResult> Refresh()
         {
-            var user = await _identityService.GetUserByRefreshTokenAsync(refreshRequest.RefreshToken);
+            var refreshToken = Request.Cookies["refreshToken"];
+            if (refreshToken == null)
+            {
+                return Unauthorized();
+            }
 
+            var user = await _identityService.GetUserByRefreshTokenAsync(refreshToken);
             if (user == null)
             {
                 return Unauthorized();
             }
 
-            var accessToken = _identityService.GenerateJSONWebToken(user.Email, user.Id.ToString(), user.Role);
-            var refreshToken = _identityService.GenerateRefreshToken();
+            var newRefreshToken = JwtHelper.GenerateRefreshToken();
             var LoginResponseDto = new LoginResponseDto
             {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
+                AccessToken = JwtHelper.GenerateJSONWebToken(_jwtSetting, user.Email, user.Id.ToString(), user.Role),
                 UserId = user.Id
             };
 
-            await _identityService.UpdateRefreshTokenAsync(user.Id, refreshToken);
+            await _identityService.UpdateRefreshTokenAsync(user.Id, newRefreshToken);
+
+            Response.Cookies.Append("refresh_token", newRefreshToken, new CookieOptions {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(7)
+            });
 
             return Ok(LoginResponseDto);
         }
