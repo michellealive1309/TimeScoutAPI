@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using TimeScout.API.DataAccess;
-using TimeScout.API.Models;
+using TimeScout.Infrastructure.DataAccess;
+using TimeScout.Domain.Entities;
+using TimeScout.Domain.Interfaces;
 
-namespace TimeScout.API.Repository;
+namespace TimeScout.Infrastructure.Repository;
 
 public class TagRepository : Repository<Tag>, ITagRepository
 {
