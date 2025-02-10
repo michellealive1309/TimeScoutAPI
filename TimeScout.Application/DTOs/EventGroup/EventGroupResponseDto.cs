@@ -1,6 +1,6 @@
-using TimeScout.API.DTOs.User;
+using TimeScout.Application.DTOs.User;
 
-namespace TimeScout.API.DTOs.EventGroup;
+namespace TimeScout.Application.DTOs.EventGroup;
 
 public class EventGroupResponseDto
 {

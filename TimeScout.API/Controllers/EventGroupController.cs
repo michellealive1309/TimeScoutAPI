@@ -2,9 +2,9 @@ using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TimeScout.API.DTOs.EventGroup;
-using TimeScout.API.Models;
-using TimeScout.API.Services;
+using TimeScout.Application.DTOs.EventGroup;
+using TimeScout.Domain.Entities;
+using TimeScout.Application.Interfaces;
 
 namespace TimeScout.API.Controllers
 {

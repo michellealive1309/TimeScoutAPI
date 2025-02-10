@@ -1,8 +1,8 @@
 using AutoMapper;
-using TimeScout.API.DTOs.EventGroup;
-using TimeScout.API.Models;
+using TimeScout.Application.DTOs.EventGroup;
+using TimeScout.Domain.Entities;
 
-namespace TimeScout.API.Profiles;
+namespace TimeScout.Application.Profiles;
 
 public class EventGroupProfile : Profile
 {
