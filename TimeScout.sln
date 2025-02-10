@@ -13,15 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeScout.Application", "Ti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeScout.Infrastructure", "TimeScout.Infrastructure\TimeScout.Infrastructure.csproj", "{1D0344D1-D338-4B4C-B2CE-489F09D71F03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeScout.Common", "TimeScout.Common\TimeScout.Common.csproj", "{1173C1DF-DF42-4796-88DF-F44A5B74673E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2BEDA04C-48BD-49A7-A4CD-B0903F48DDF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,9 +39,8 @@ Global
 		{1D0344D1-D338-4B4C-B2CE-489F09D71F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D0344D1-D338-4B4C-B2CE-489F09D71F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D0344D1-D338-4B4C-B2CE-489F09D71F03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1173C1DF-DF42-4796-88DF-F44A5B74673E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1173C1DF-DF42-4796-88DF-F44A5B74673E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1173C1DF-DF42-4796-88DF-F44A5B74673E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1173C1DF-DF42-4796-88DF-F44A5B74673E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
