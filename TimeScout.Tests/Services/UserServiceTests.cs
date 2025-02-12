@@ -1,7 +1,7 @@
 using Moq;
 using TimeScout.Domain.Entities;
-using TimeScout.Infrastructure.Repository;
 using TimeScout.Application.Services;
+using TimeScout.Domain.Interfaces;
 
 namespace TimeScout.Tests.Services
 {
@@ -44,8 +44,6 @@ namespace TimeScout.Tests.Services
         {
             // Arrange
             var userRepository = new Mock<IUserRepository>();
-            userRepository.Setup(x => x.DeleteUserAsync(It.IsAny<int>())).ReturnsAsync(false);
-
             var userService = new UserService(userRepository.Object);
 
             // Act
@@ -59,9 +57,15 @@ namespace TimeScout.Tests.Services
         public async Task Test_Delete_User_Should_Return_True()
         {
             // Arrange
+            var user = new User {
+                Id = 1,
+                Username = "test",
+                Email = "john.doe@mail.com",
+                Password = "abc",
+                Role = "User"
+            };
             var userRepository = new Mock<IUserRepository>();
-            userRepository.Setup(x => x.DeleteUserAsync(It.IsAny<int>())).ReturnsAsync(true);
-
+            userRepository.Setup(x => x.FindAsync(1)).ReturnsAsync(user);
             var userService = new UserService(userRepository.Object);
 
             // Act
@@ -194,9 +198,6 @@ namespace TimeScout.Tests.Services
                 Role = "User",
             };
             var userRepository = new Mock<IUserRepository>();
-
-            userRepository.Setup(x => x.UpdateUserAsync(It.IsAny<User>())).ReturnsAsync((User)null);
-
             var userService = new UserService(userRepository.Object);
 
             // Act
@@ -220,16 +221,14 @@ namespace TimeScout.Tests.Services
                 RecoveryEndDate = DateTime.UtcNow.AddDays(+1)
             };
             var userRepository = new Mock<IUserRepository>();
-
-            userRepository.Setup(x => x.UpdateUserAsync(It.IsAny<User>())).ReturnsAsync(user);
-
+            userRepository.Setup(x => x.FindAsync(1)).ReturnsAsync(user);
             var userService = new UserService(userRepository.Object);
 
             // Act
             var result = await userService.UpdateUserAsync(user);
 
             // Assert
-            Assert.Equal(user, result);
+            Assert.Equivalent(user, result);
         }
     }
 }

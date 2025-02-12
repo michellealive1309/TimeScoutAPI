@@ -1,7 +1,7 @@
 using Moq;
 using TimeScout.Domain.Entities;
-using TimeScout.Infrastructure.Repository;
 using TimeScout.Application.Services;
+using TimeScout.Domain.Interfaces;
 
 namespace TimeScout.Tests.Services
 {
@@ -123,12 +123,12 @@ namespace TimeScout.Tests.Services
             };
             var eventRepositoryMock = new Mock<IEventRepository>();
 
-            eventRepositoryMock.Setup(x => x.GetEventsByDateRangeAsync(It.IsAny<DateOnly>(), It.IsAny<DateOnly>(), 1)).ReturnsAsync(expected);
+            eventRepositoryMock.Setup(x => x.GetEventsByDateRangeAsync(It.IsAny<DateOnly>(), It.IsAny<DateOnly>())).ReturnsAsync(expected);
 
             var eventService = new EventService(eventRepositoryMock.Object);
 
             // Act
-            var actual = await eventService.GetAllEventsAsync(span, now, 1);
+            var actual = await eventService.GetAllEventsAsync(span, now);
 
             // Assert
             Assert.Same(expected, actual);
@@ -140,12 +140,12 @@ namespace TimeScout.Tests.Services
             // Arrange
             var eventRepositoryMock = new Mock<IEventRepository>();
 
-            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1, 1)).ReturnsAsync((Event)null);
+            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1)).ReturnsAsync((Event)null);
 
             var eventService = new EventService(eventRepositoryMock.Object);
 
             // Act
-            var actual = await eventService.GetEventByIdAsync(1, 1);
+            var actual = await eventService.GetEventByIdAsync(1);
 
             // Assert
             Assert.Null(actual);
@@ -161,12 +161,12 @@ namespace TimeScout.Tests.Services
             };
             var eventRepositoryMock = new Mock<IEventRepository>();
 
-            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1, 1)).ReturnsAsync(@event);
+            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1)).ReturnsAsync(@event);
 
             var eventService = new EventService(eventRepositoryMock.Object);
 
             // Act
-            var actual = await eventService.GetEventByIdAsync(1, 1);
+            var actual = await eventService.GetEventByIdAsync(1);
 
             // Assert
             Assert.IsType<Event>(actual);
@@ -181,7 +181,7 @@ namespace TimeScout.Tests.Services
             };
             var eventRepositoryMock = new Mock<IEventRepository>();
 
-            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1, 1)).ReturnsAsync((Event)null);
+            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1)).ReturnsAsync((Event)null);
 
             var eventService = new EventService(eventRepositoryMock.Object);
 
@@ -201,7 +201,7 @@ namespace TimeScout.Tests.Services
             };
             var eventRepositoryMock = new Mock<IEventRepository>();
 
-            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1, 1)).ReturnsAsync((Event)null);
+            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1)).ReturnsAsync((Event)null);
 
             var eventService = new EventService(eventRepositoryMock.Object);
 
@@ -228,7 +228,7 @@ namespace TimeScout.Tests.Services
             };
             var eventRepositoryMock = new Mock<IEventRepository>();
 
-            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1, 1)).ReturnsAsync(@event);
+            eventRepositoryMock.Setup(x => x.GetEventByIdAsync(1)).ReturnsAsync(@event);
 
             var eventService = new EventService(eventRepositoryMock.Object);
 
