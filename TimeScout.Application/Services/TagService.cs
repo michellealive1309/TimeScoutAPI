@@ -39,14 +39,14 @@ public class TagService : ITagService
         return true;
     }
 
-    public Task<IEnumerable<Tag>> GetAllTagsAsync(int userId)
+    public Task<IEnumerable<Tag>> GetAllTagsAsync()
     {
-        return _tagRepository.GetAllTagsAsync(userId);
+        return _tagRepository.GetAllTagsAsync();
     }
 
-    public Task<Tag?> GetTagByIdAsync(int id, int userId)
+    public Task<Tag?> GetTagByIdAsync(int id)
     {
-        return _tagRepository.GetTagByIdAsync(id, userId);
+        return _tagRepository.GetTagByIdAsync(id);
     }
 
     public async Task<Tag?> UpdateTagAsync(Tag updateTag)

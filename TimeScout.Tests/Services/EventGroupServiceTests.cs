@@ -1,7 +1,7 @@
 using Moq;
 using TimeScout.Domain.Entities;
-using TimeScout.Infrastructure.Repository;
 using TimeScout.Application.Services;
+using TimeScout.Domain.Interfaces;
 
 namespace TimeScout.Tests.Services
 {

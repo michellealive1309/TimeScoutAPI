@@ -13,18 +13,14 @@ public class TagRepository : Repository<Tag>, ITagRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Tag>> GetAllTagsAsync(int userId)
+    public async Task<IEnumerable<Tag>> GetAllTagsAsync()
     {
-        return await _context.Tags.AsNoTracking()
-            .Where(t => t.UserId == userId)
-            .ToListAsync();
+        return await _context.Tags.AsNoTracking().ToListAsync();
     }
 
-    public async Task<Tag?> GetTagByIdAsync(int id, int userId)
+    public async Task<Tag?> GetTagByIdAsync(int id)
     {
         
-        return await _context.Tags
-            .Where(t => t.UserId == userId)
-            .FirstOrDefaultAsync(t => t.Id == id);
+        return await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
     }
 }

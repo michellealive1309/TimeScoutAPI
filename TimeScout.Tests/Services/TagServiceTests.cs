@@ -1,8 +1,7 @@
-using System.Threading.Tasks;
 using Moq;
 using TimeScout.Domain.Entities;
-using TimeScout.Infrastructure.Repository;
 using TimeScout.Application.Services;
+using TimeScout.Domain.Interfaces;
 
 namespace TimeScout.Tests.Services
 {
@@ -115,12 +114,12 @@ namespace TimeScout.Tests.Services
             };
             var tagRepositoryMock = new Mock<ITagRepository>();
 
-            tagRepositoryMock.Setup(x => x.GetAllTagsAsync(1)).ReturnsAsync(expected);
+            tagRepositoryMock.Setup(x => x.GetAllTagsAsync()).ReturnsAsync(expected);
 
             var tagService = new TagService(tagRepositoryMock.Object);
 
             // Act
-            var actual = await tagService.GetAllTagsAsync(1);
+            var actual = await tagService.GetAllTagsAsync();
 
             // Assert
             Assert.Same(expected, actual);
@@ -132,12 +131,12 @@ namespace TimeScout.Tests.Services
             // Arrange
             var tagRepositoryMock = new Mock<ITagRepository>();
 
-            tagRepositoryMock.Setup(x => x.GetTagByIdAsync(1, 1)).ReturnsAsync((Tag)null);
+            tagRepositoryMock.Setup(x => x.GetTagByIdAsync(1)).ReturnsAsync((Tag)null);
 
             var tagService = new TagService(tagRepositoryMock.Object);
 
             // Act
-            var actual = await tagService.GetTagByIdAsync(1, 1);
+            var actual = await tagService.GetTagByIdAsync(1);
 
             // Assert
             Assert.Null(actual);
@@ -155,12 +154,12 @@ namespace TimeScout.Tests.Services
             };
             var tagRepositoryMock = new Mock<ITagRepository>();
 
-            tagRepositoryMock.Setup(x => x.GetTagByIdAsync(1, 1)).ReturnsAsync(expected);
+            tagRepositoryMock.Setup(x => x.GetTagByIdAsync(1)).ReturnsAsync(expected);
 
             var tagService = new TagService(tagRepositoryMock.Object);
 
             // Act
-            var actual = await tagService.GetTagByIdAsync(1, 1);
+            var actual = await tagService.GetTagByIdAsync(1);
 
             // Assert
             Assert.Same(expected, actual);

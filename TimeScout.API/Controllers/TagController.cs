@@ -28,8 +28,7 @@ namespace TimeScout.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTagByIdAsync(int id)
         {
-            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var tag = await _tagService.GetTagByIdAsync(id, userId);
+            var tag = await _tagService.GetTagByIdAsync(id);
 
             if (tag == null)
             {
@@ -42,8 +41,7 @@ namespace TimeScout.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTagsAsync()
         {
-            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var tags = await _tagService.GetAllTagsAsync(userId);
+            var tags = await _tagService.GetAllTagsAsync();
 
             return Ok(_mapper.Map<IEnumerable<TagResponseDto>>(tags));
         }
