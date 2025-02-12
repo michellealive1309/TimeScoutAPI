@@ -1,13 +1,23 @@
 using TimeScout.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using TimeScout.Infrastructure.DataAccess.ModelConfigurations;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using TimeScout.Infrastructure.Provider;
 
 namespace TimeScout.Infrastructure.DataAccess;
 
 public class TimeScoutDbContext : DbContext
 {
-    public TimeScoutDbContext(DbContextOptions<TimeScoutDbContext> options) : base(options)
+    private readonly ICurrentUserProvider _currentUser;
+    private int? UserId => _currentUser.GetUserId();
+
+    public TimeScoutDbContext(
+        DbContextOptions<TimeScoutDbContext> options,
+        ICurrentUserProvider currentUser
+    ) : base(options)
     {
+        _currentUser = currentUser;
     }
 
     public DbSet<Event> Events { get; set; }
@@ -20,6 +30,11 @@ public class TimeScoutDbContext : DbContext
         modelBuilder.ApplyConfiguration(new EventGroupModelConfiguration());
         modelBuilder.ApplyConfiguration(new EventModelConfiguration());
         modelBuilder.ApplyConfiguration(new UserModelConfiguration());
+        modelBuilder.ApplyConfiguration(new TagModelConfiguration());
+
+        modelBuilder.Entity<Event>().HasQueryFilter(e => e.UserId == UserId);
+        modelBuilder.Entity<Tag>().HasQueryFilter(e => e.UserId == UserId);
+
         base.OnModelCreating(modelBuilder);
     }
 

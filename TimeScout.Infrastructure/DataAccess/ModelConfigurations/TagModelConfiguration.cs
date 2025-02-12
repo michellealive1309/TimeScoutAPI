@@ -13,7 +13,7 @@ public class TagModelConfiguration : IEntityTypeConfiguration<Tag>
         builder.HasKey(t => t.Id);
 
         builder.HasMany<Event>()
-            .WithOne()
+            .WithOne(e => e.Tag)
             .HasForeignKey(e => e.TagId)
             .IsRequired(false);
     }

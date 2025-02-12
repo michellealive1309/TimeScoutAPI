@@ -13,7 +13,7 @@ using TimeScout.Infrastructure.Repository;
 using TimeScout.Application.Settings;
 using TimeScout.Application.Profiles;
 using Microsoft.AspNetCore.RateLimiting;
-using System.Threading.RateLimiting;
+using TimeScout.Infrastructure.Provider;
 
 namespace TimeScout.API;
 
@@ -35,6 +35,7 @@ public class StartUp
         services.Configure<JwtSetting>(Configuration.GetSection("Jwt"));
 
         services.AddControllers();
+        services.AddHttpContextAccessor();
 
         // Add repository scoped
         services.AddScoped<IUserRepository, UserRepository>();
@@ -48,6 +49,9 @@ public class StartUp
         services.AddScoped<IEventService, EventService>();
         services.AddScoped<IEventGroupService, EventGroupService>();
         services.AddScoped<ITagService, TagService>();
+
+        // Add provider scoped
+        services.AddScoped<ICurrentUserProvider, CurrentUser>();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();

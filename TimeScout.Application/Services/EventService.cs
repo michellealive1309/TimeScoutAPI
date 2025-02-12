@@ -39,7 +39,7 @@ public class EventService : IEventService
         return true;
     }
 
-    public async Task<IEnumerable<Event>> GetAllEventsAsync(string span, DateTime date, int userId)
+    public async Task<IEnumerable<Event>> GetAllEventsAsync(string span, DateTime date)
     {
         var start = new DateOnly(date.Year, date.Month, date.Day);
         var end = new DateOnly(date.Year, date.Month, date.Day);
@@ -67,17 +67,17 @@ public class EventService : IEventService
                 break;
         }
 
-        return await _eventRepository.GetEventsByDateRangeAsync(start, end, userId);
+        return await _eventRepository.GetEventsByDateRangeAsync(start, end);
     }
 
-    public Task<Event?> GetEventByIdAsync(int id, int userId)
+    public Task<Event?> GetEventByIdAsync(int id)
     {
-        return _eventRepository.GetEventByIdAsync(id, userId);
+        return _eventRepository.GetEventByIdAsync(id);
     }
 
     public async Task<Event?> UpdateEventAsync(Event updateEvent)
     {
-        var toUpdateEvent = await _eventRepository.GetEventByIdAsync(updateEvent.Id, updateEvent.UserId); 
+        var toUpdateEvent = await _eventRepository.GetEventByIdAsync(updateEvent.Id); 
 
         if (toUpdateEvent == null || toUpdateEvent.UserId == 0)
         {

@@ -44,8 +44,7 @@ namespace TimeScout.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<EventResponseDto>> GetEventAsync(int id)
         {
-            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var result = await _eventService.GetEventByIdAsync(id, userId);
+            var result = await _eventService.GetEventByIdAsync(id);
 
             if (result == null)
             {
@@ -67,8 +66,7 @@ namespace TimeScout.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var events = await _eventService.GetAllEventsAsync(span, date, userId);
+            var events = await _eventService.GetAllEventsAsync(span, date);
             var responseDto = _mapper.Map<IEnumerable<EventResponseDto>>(events);
 
             return Ok(responseDto);
@@ -83,20 +81,11 @@ namespace TimeScout.API.Controllers
             }
 
             var newEvent = _mapper.Map<Event>(eventCreateRequest);
+            var result = await _eventService.CreateEventAsync(newEvent);
 
-            try
+            if (!result)
             {
-                var result = await _eventService.CreateEventAsync(newEvent);
-
-                if (!result)
-                {
-                    return BadRequest("Event creation failed.");
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Error saving event");
-                return BadRequest("Adding operation failed.");
+                return BadRequest("Event creation failed.");
             }
 
             return Ok("Event creation success.");
